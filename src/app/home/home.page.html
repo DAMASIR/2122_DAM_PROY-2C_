@@ -1,20 +1,55 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-title>
-      Blank
+      Bolsa
     </ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Blank</ion-title>
-    </ion-toolbar>
-  </ion-header>
+  <ion-toolbar>
+    <ion-button color="success" expand="block">Crear empresa</ion-button>
+    <ion-button color="primary" expand="block" [disabled]="checkeds < limit">Mostrar gráfico</ion-button>      
+  </ion-toolbar>
+    <ion-button (click)="toggleInfiniteScroll()" expand="block" color="dark">
+      {{toggle}}
+    </ion-button>
+    <ion-searchbar color="medium" showCancelButton="focus" animated></ion-searchbar>
+    <ion-list>
+      <ion-item *ngFor="let item of items">
+        <ion-item-sliding>
+          <ion-item>
+            <ion-checkbox color="dark" [(ngModel)]="item.isChecked" (click)="comprobar(item)" [disabled]="!item.isChecked && checkeds === limit"></ion-checkbox>
+            <ion-label class="labelEmpresa">
+              {{item.nombre}}
+            </ion-label>
+            <ion-thumbnail><img class="imagen" src="../../assets/imagenes/adidas.png"></ion-thumbnail>
+          </ion-item>
+          <ion-item-options>
+            <ion-item-option color="primary">
+              <ion-icon slot="end" name="pencil"></ion-icon>
+              Editar
+            </ion-item-option>
+            <ion-item-option color="danger" (click)="presentAlertConfirm()">
+              <ion-icon slot="end" name="trash"></ion-icon>
+              Borrar
+            </ion-item-option>
+          </ion-item-options>
+        </ion-item-sliding>
+      </ion-item>
+
+    </ion-list>
+
+    <ion-infinite-scroll threshold="100px" (ionInfinite)="loadData($event)" [disabled]="cargas <= 0">
+      <ion-infinite-scroll-content
+        loadingSpinner="bubbles"
+        loadingText="Cargando datos…">
+      </ion-infinite-scroll-content>
+    </ion-infinite-scroll>
+
+
 
   <div id="container">
-    <strong>Ready to create an app?</strong>
-    <p>Start with Ionic <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
+
   </div>
 </ion-content>
