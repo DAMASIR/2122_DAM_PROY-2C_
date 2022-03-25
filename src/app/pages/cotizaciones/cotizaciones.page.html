@@ -1,0 +1,30 @@
+<ion-header>
+  <ion-toolbar color="dark">
+    <ion-title>Cotizaciones</ion-title>
+    <ion-buttons slot="end">
+      <ion-button [routerLink]="['/edicion', 1]">Volver</ion-button>
+    </ion-buttons>
+    <ion-buttons slot="end">
+      <ion-button [routerLink]="['/']">Salir</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-button (click)="toggleInfiniteScroll()" expand="block" color="dark">
+    {{toggle}}
+  </ion-button>
+  <ion-button color="primary" expand="block" [routerLink]="['/']">Modificar cotizaciones</ion-button>
+  <ion-list>
+    <ion-item *ngFor="let item of items">
+      <ion-input class="valores" placeholder="Fecha"></ion-input>
+      <ion-input class="valores" placeholder="Valor"></ion-input>
+    </ion-item>
+  </ion-list>
+    <ion-infinite-scroll threshold="100px" (ionInfinite)="loadData($event)" [disabled]="cargas <= 0">
+    <ion-infinite-scroll-content
+      loadingSpinner="bubbles"
+      loadingText="Cargando datos…">
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+</ion-content>
