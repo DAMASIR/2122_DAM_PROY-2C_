@@ -8,7 +8,7 @@
 
 <ion-content [fullscreen]="true">
   <ion-toolbar>
-    <ion-button color="success" expand="block">Crear empresa</ion-button>
+    <ion-button color="success" expand="block" [routerLink]="['/edicion', -1]">Crear empresa</ion-button>
     <ion-button color="primary" expand="block" [disabled]="checkeds < limit">Mostrar gráfico</ion-button>      
   </ion-toolbar>
     <ion-button (click)="toggleInfiniteScroll()" expand="block" color="dark">
@@ -26,7 +26,7 @@
             <ion-thumbnail><img class="imagen" src="../../assets/imagenes/adidas.png"></ion-thumbnail>
           </ion-item>
           <ion-item-options>
-            <ion-item-option color="primary">
+            <ion-item-option color="primary" [routerLink]="['/edicion', 1]">
               <ion-icon slot="end" name="pencil"></ion-icon>
               Editar
             </ion-item-option>
@@ -37,19 +37,13 @@
           </ion-item-options>
         </ion-item-sliding>
       </ion-item>
-
     </ion-list>
-
     <ion-infinite-scroll threshold="100px" (ionInfinite)="loadData($event)" [disabled]="cargas <= 0">
       <ion-infinite-scroll-content
         loadingSpinner="bubbles"
         loadingText="Cargando datos…">
       </ion-infinite-scroll-content>
     </ion-infinite-scroll>
-
-
-
   <div id="container">
-
   </div>
 </ion-content>

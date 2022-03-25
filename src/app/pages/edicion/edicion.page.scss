@@ -1,0 +1,28 @@
+ion-input {
+    --background: rgb(255, 115, 0);
+    --padding-start: 10px;
+    margin-bottom: 35px;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+ion-row {
+    margin: 10px;
+}
+ion-checkbox {
+    margin-left: 20px;
+    margin-top: 10px;
+    --size: 40px;
+ }
+ ion-label {
+     font-size: 20px;
+ }
+.label {
+    padding-left: 10px;
+    // vertical-align: middle;
+}
+.contenedor {
+    height: 90%;
+    display: flex;
+    align-items: top;
+    justify-content: center;
+}

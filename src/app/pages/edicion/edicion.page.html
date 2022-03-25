@@ -1,0 +1,53 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>{{titulo}}</ion-title>
+    <ion-buttons slot="end">
+      <ion-button [routerLink]="['/']">Salir</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="contenedor">
+    <ion-grid>
+      <ion-row>
+          <ion-label>Nombre: </ion-label>
+      </ion-row>
+      <ion-row>
+          <ion-input placeholder="Nombre"></ion-input>
+      </ion-row>
+      <ion-row>
+        <ion-label>Dirección: </ion-label>
+      </ion-row>
+      <ion-row>
+        <ion-input placeholder="Dirección"></ion-input>
+      </ion-row>
+      <ion-row>
+        <ion-label>Web: </ion-label>
+      </ion-row>
+      <ion-row>
+        <ion-input placeholder="Web"></ion-input>
+      </ion-row>
+      <ion-row>
+        <ion-label>Sector: </ion-label>
+      </ion-row>
+      <ion-row>
+        <ion-input placeholder="Sector"></ion-input>
+      </ion-row>
+      <ion-row>
+        <ion-label>URL logo: </ion-label>
+      </ion-row>
+      <ion-row>
+        <ion-input placeholder="URL logo"></ion-input>
+      </ion-row>
+      <ion-row>
+        <ion-label>Destacada: </ion-label>
+      </ion-row>
+      <ion-row>
+        <ion-checkbox></ion-checkbox>
+      </ion-row>
+    </ion-grid>
+  </div>
+  <ion-button *ngIf="id > -1" color="dark" expand="block">Editar cotizaciones</ion-button>
+  <ion-button color="success" expand="block">{{textoBoton}}</ion-button>
+</ion-content>

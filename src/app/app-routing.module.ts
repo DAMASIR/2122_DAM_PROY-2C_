@@ -11,6 +11,10 @@ const routes: Routes = [
     redirectTo: 'home',
     pathMatch: 'full'
   },
+  {
+    path: 'edicion/:id',
+    loadChildren: () => import('./pages/edicion/edicion.module').then( m => m.EdicionPageModule)
+  },
 ];
 
 @NgModule({
