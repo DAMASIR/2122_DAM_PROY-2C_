@@ -19,6 +19,10 @@ const routes: Routes = [
     path: 'cotizaciones/:id',
     loadChildren: () => import('./pages/cotizaciones/cotizaciones.module').then( m => m.CotizacionesPageModule)
   },
+  {
+    path: 'graficos',
+    loadChildren: () => import('./pages/graficos/graficos.module').then( m => m.GraficosPageModule)
+  },
 ];
 
 @NgModule({
