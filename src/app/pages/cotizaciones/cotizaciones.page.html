@@ -14,7 +14,17 @@
   <ion-button (click)="toggleInfiniteScroll()" expand="block" color="dark">
     {{toggle}}
   </ion-button>
-  <ion-button color="primary" expand="block" [routerLink]="['/']">Modificar cotizaciones</ion-button>
+  <ion-button color="primary" expand="block" [routerLink]="['/edicion', 1]">Modificar cotizaciones</ion-button>
+  <ion-grid>
+    <ion-row>
+      <ion-col>
+        <ion-button color="success" expand="block">Limpiar</ion-button>
+      </ion-col>
+      <ion-col>
+        <ion-button color="warning" expand="block">Resetear</ion-button>
+      </ion-col>
+    </ion-row>    
+  </ion-grid>
   <ion-list>
     <ion-item *ngFor="let item of items">
       <ion-input class="valores" placeholder="Fecha"></ion-input>

@@ -48,6 +48,16 @@
       </ion-row>
     </ion-grid>
   </div>
+  <ion-grid>
+    <ion-row>
+      <ion-col>
+        <ion-button color="success" expand="block">Limpiar</ion-button>
+      </ion-col>
+      <ion-col *ngIf="id > -1">
+        <ion-button color="warning" expand="block">Resetear</ion-button>
+      </ion-col>
+    </ion-row>    
+  </ion-grid>
   <ion-button *ngIf="id > -1" color="dark" expand="block" [routerLink]="['/cotizaciones', 1]">Editar cotizaciones</ion-button>
-  <ion-button color="success" expand="block">{{textoBoton}}</ion-button>
+  <ion-button color="primary" expand="block" [routerLink]="['/']">{{textoBoton}}</ion-button>
 </ion-content>

@@ -1,5 +1,5 @@
 ion-item {
-    margin-bottom: 20px;
+    margin-bottom: 16px;
 }
 ion-input {
     --padding-start: 10px !important;
@@ -9,4 +9,8 @@ ion-input {
     margin-left: 5px;
     margin-right: 5px;
     box-shadow: 3px 3px 3px;
+}
+ion-col {
+    margin-bottom: -6px;
+    margin-top: 1px;
 }
