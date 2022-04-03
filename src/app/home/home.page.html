@@ -16,7 +16,7 @@
     </ion-button>
     <ion-searchbar color="medium" showCancelButton="focus" animated></ion-searchbar>
     <ion-list>
-      <ion-item *ngFor="let item of items">
+      <ion-item *ngFor="let item of servicio.empresas">
         <ion-item-sliding>
           <ion-item>
             <ion-checkbox color="dark" [(ngModel)]="item.isChecked" (click)="comprobar(item)" [disabled]="!item.isChecked && checkeds === limit"></ion-checkbox>
@@ -26,11 +26,11 @@
             <ion-thumbnail><img class="imagen" src="../../assets/imagenes/adidas.png"></ion-thumbnail>
           </ion-item>
           <ion-item-options>
-            <ion-item-option color="primary" [routerLink]="['/edicion', 1]">
+            <ion-item-option color="primary" [routerLink]="['/edicion', item.id]">
               <ion-icon slot="end" name="pencil"></ion-icon>
               Editar
             </ion-item-option>
-            <ion-item-option color="danger" (click)="presentAlertConfirm()">
+            <ion-item-option color="danger" (click)="presentAlertConfirm(item.id)">
               <ion-icon slot="end" name="trash"></ion-icon>
               Borrar
             </ion-item-option>
