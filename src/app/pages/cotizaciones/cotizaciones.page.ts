@@ -16,16 +16,13 @@ export class CotizacionesPage implements OnInit {
 
   public id: number;
 
-  // items = [];
   toggle = "Detener scroll infinito";
   cargas = 2;
-  contador = 0;
+  // contador = 0;
 
   url: string;
   pagina = 1;
   cotizaciones_por_pagina = 10;
-
-  // cotix: Cotizacion[];
 
   constructor(public servicioHttp: HttpServicioService, public servicio: ServicioEmpresaService, public activatedRouter: ActivatedRoute) {
   
@@ -39,20 +36,13 @@ export class CotizacionesPage implements OnInit {
     }, 1000);
   }
 
+  // Metodo para intercambiar la funcionalidad del scroll infinito entre activo e inactivo
   toggleInfiniteScroll() {
     this.infiniteScroll.disabled = !this.infiniteScroll.disabled;
     if(this.toggle == "Detener scroll infinito"){
       this.toggle = "Activar scroll infinito";
     } else {this.toggle = "Detener scroll infinito"}
   }
-
-  // addMoreItems(contador: number){
-  //   for(let i = contador; i < contador + 10; i++){
-  //     this.items.push(this.servicio.cotizacionesEmpresa[i]);
-  //     // this.items.push({nombre: 'Empresa ' + i, isChecked: false});
-  //   }
-  //   this.contador += 10;
-  // }
 
   // Metodo para recargar empresas en el scroll infinito
   getCotizaciones(otraCarga, event) {
@@ -64,7 +54,6 @@ export class CotizacionesPage implements OnInit {
           console.log(data);
           for (let i = 0; i < data.length; i++) {
             this.servicio.cotizacionesEmpresa.push(data[i]);
-            // this.items.push(data[i]);
           }
           console.log(this.servicio.cotizacionesEmpresa);
           if (otraCarga)
@@ -75,37 +64,13 @@ export class CotizacionesPage implements OnInit {
           console.log(error);
         })
     }
+
   resetearCotizaciones() {
     this.servicio.cotizacionesEmpresa = [];
   }
 
-  // probar(id){
-  //   let unaCoti = new Cotizacion(1001, 1, "01/04/22", 80);
-  //   let otraCoti = new Cotizacion(1002, 1, "02/04/22", 85);
-  //   let anotherCoti = new Cotizacion(1003, 1, "03/04/22", 99);
-  //   this.cotix = [unaCoti, otraCoti, anotherCoti];
-  //   this.servicioHttp.createCotizacion(unaCoti).subscribe((data) =>{
-  //     console.log(data);
-  //     },
-  //   (error) => {
-  //       console.log(error);
-  //   });
-  //   // this.servicioHttp.updateCotizaciones(id, this.cotix).subscribe((data) =>{
-  //   //   console.log(data);
-  //   // },
-  //   // (error) => {
-  //   //   console.log(error);
-  //   // });
-  //   console.log("cotizando");
-  // }
-
   ngOnInit() {
     this.id = +this.activatedRouter.snapshot.paramMap.get('id');
-    // this.addMoreItems(this.contador);
-    // this.id = Number(this.activatedRouter.snapshot.paramMap.get('id'));
-    console.log(this.id);
-    console.log(this.id);
-    // console.log(this.items)
     this.getCotizaciones(false, "");
   }
 
