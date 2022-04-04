@@ -69,9 +69,10 @@ export class HttpServicioService {
     .pipe(retry(2), catchError(this.handleError));
   }
 
-  getListaCotizacionesEmpresa(id): Observable<Cotizacion[]> {
+  getListaCotizacionesEmpresa(id, params): Observable<Cotizacion[]> {
+    let id_num = Number(id);
     return this.http
-    .get<Cotizacion[]>(this.basePath2 + '/' + id)
+    .get<Cotizacion[]>(this.basePath1 + '/' + id_num + '/cotizaciones' + params)
     .pipe(retry(2), catchError(this.handleError));
   }
 

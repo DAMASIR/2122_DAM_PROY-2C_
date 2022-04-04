@@ -8,14 +8,14 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class EdicionPage implements OnInit {
 
-  public id;
+  public id: number;
   public titulo: string;
   public textoBoton: string;
 
   constructor(public activatedRouter: ActivatedRoute) { }
 
   ngOnInit() {
-    this.id = this.activatedRouter.snapshot.paramMap.get('id');
+    this.id = +this.activatedRouter.snapshot.paramMap.get('id');
     console.log(this.id);
     if(this.id == -1) {
       this.titulo = "Crear empresa";
