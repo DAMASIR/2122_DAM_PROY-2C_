@@ -15,9 +15,10 @@ export class HomePage {
 
   toggle = "Detener scroll infinito";
   cargas = 3;
+
   url: string;
   pagina = 1;
-  empresas_por_pagina = 8;
+  empresas_por_pagina = 7;
 
   public checkeds = 0;
   public limit = 3;
@@ -93,7 +94,18 @@ export class HomePage {
           text: 'Eliminar',
           id: 'confirm-button',
           handler: () => {
-
+            this.httpServicio.deleteEmpresa(id).subscribe((data) => {
+              console.log(data);
+              // Recargamos la pantalla con datos actualizados desde el servidor
+              this.servicio.empresas = [];              
+              this.cargas = 3;
+              this.pagina = 1;
+              this.getEmpresas(false, "");
+              console.log(this.servicio.empresas);
+            },
+            (error) => {
+              console.log(error);
+            });
             console.log('Confirmar Eliminar Empresa');
             console.log(id);
           }
@@ -102,5 +114,4 @@ export class HomePage {
     });
     await alert.present();
   }
-
 }
