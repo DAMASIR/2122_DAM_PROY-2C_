@@ -2,8 +2,9 @@ ion-input {
     --background: rgb(255, 115, 0);
     --padding-start: 10px;
     margin-bottom: 25px;
-    margin-left: 10px;
-    margin-right: 10px;
+    margin-left: 5px;
+    margin-right: 5px;
+    font-size: 20px;
 }
 ion-row {
     margin: 8px;
@@ -25,4 +26,8 @@ ion-checkbox {
     display: flex;
     align-items: top;
     justify-content: center;
+}
+.boton{
+    margin-top: 15px;
+    margin-bottom: -5px;
 }

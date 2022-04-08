@@ -9,55 +9,57 @@
 
 <ion-content>
   <div class="contenedor">
-    <ion-grid>
-      <ion-row>
-          <ion-label>Nombre: </ion-label>
-      </ion-row>
-      <ion-row>
-          <ion-input placeholder="Nombre"></ion-input>
-      </ion-row>
-      <ion-row>
-        <ion-label>Dirección: </ion-label>
-      </ion-row>
-      <ion-row>
-        <ion-input placeholder="Dirección"></ion-input>
-      </ion-row>
-      <ion-row>
-        <ion-label>Web: </ion-label>
-      </ion-row>
-      <ion-row>
-        <ion-input placeholder="Web"></ion-input>
-      </ion-row>
-      <ion-row>
-        <ion-label>Sector: </ion-label>
-      </ion-row>
-      <ion-row>
-        <ion-input placeholder="Sector"></ion-input>
-      </ion-row>
-      <ion-row>
-        <ion-label>URL logo: </ion-label>
-      </ion-row>
-      <ion-row>
-        <ion-input placeholder="URL logo"></ion-input>
-      </ion-row>
-      <ion-row>
-        <ion-label>Destacada: </ion-label>
-      </ion-row>
-      <ion-row>
-        <ion-checkbox></ion-checkbox>
-      </ion-row>
-    </ion-grid>
+    <ion-form [formGroup]="formulario" (ngSubmit)="enviar(formulario.value)">
+      <ion-grid>
+        <ion-row>
+            <ion-label>Nombre: </ion-label>
+        </ion-row>
+        <ion-row>
+            <ion-input formControlName="nombre" name="nombre" placeholder="Nombre" type="text" size="30" clear-input></ion-input>
+        </ion-row>
+        <ion-row>
+          <ion-label>Dirección: </ion-label>
+        </ion-row>
+        <ion-row>
+          <ion-input formControlName="direccion" name="direccion" placeholder="Dirección" type="text" clear-input></ion-input>
+        </ion-row>
+        <ion-row>
+          <ion-label>Web: </ion-label>
+        </ion-row>
+        <ion-row>
+          <ion-input formControlName="web" name="web" placeholder="Web" type="text" clear-input></ion-input>
+        </ion-row>
+        <ion-row>
+          <ion-label>Sector: </ion-label>
+        </ion-row>
+        <ion-row>
+          <ion-input formControlName="sector" name="sector" placeholder="Sector" type="text" clear-input></ion-input>
+        </ion-row>
+        <ion-row>
+          <ion-label>URL logo: </ion-label>
+        </ion-row>
+        <ion-row>
+          <ion-input formControlName="logo" name="logo" placeholder="URL logo" type="text" clear-input></ion-input>
+        </ion-row>
+        <ion-row>
+          <ion-label>Destacada: </ion-label>
+        </ion-row>
+        <ion-row>
+          <ion-checkbox formControlName="destacada" name="destacada"></ion-checkbox>
+        </ion-row>
+      </ion-grid>
+      <ion-grid>
+        <ion-row>
+          <ion-col>
+            <ion-button type="button" (click)="limpiar()" class="boton" color="success" expand="block">Limpiar</ion-button>
+          </ion-col>
+          <ion-col *ngIf="id > -1">
+            <ion-button type="button" (click)="resetear()" class="boton" color="warning" expand="block">Resetear</ion-button>
+          </ion-col>
+        </ion-row>    
+      </ion-grid>
+      <ion-button *ngIf="id > -1" (click)="probar()" color="dark" expand="block" [routerLink]="['/cotizaciones', id]">Editar cotizaciones</ion-button>
+      <ion-button (click)="enviar(formulario.value)" type="submit" color="primary" expand="block" routerDirection="back" [routerLink]="['/']" [disabled]="!formulario.valid">{{textoBoton}}</ion-button>
+    </ion-form>
   </div>
-  <ion-grid>
-    <ion-row>
-      <ion-col>
-        <ion-button color="success" expand="block">Limpiar</ion-button>
-      </ion-col>
-      <ion-col *ngIf="id > -1">
-        <ion-button color="warning" expand="block">Resetear</ion-button>
-      </ion-col>
-    </ion-row>    
-  </ion-grid>
-  <ion-button *ngIf="id > -1" color="dark" expand="block" [routerLink]="['/cotizaciones', id]">Editar cotizaciones</ion-button>
-  <ion-button color="primary" expand="block" [routerLink]="['/']">{{textoBoton}}</ion-button>
 </ion-content>

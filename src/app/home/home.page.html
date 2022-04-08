@@ -8,7 +8,7 @@
 
 <ion-content [fullscreen]="true">
   <ion-toolbar>
-    <ion-button color="success" expand="block" [routerLink]="['/edicion', -1]">Crear empresa</ion-button>
+    <ion-button color="success" expand="block" routerDirection="back" [routerLink]="['/edicion', -1]">Crear empresa</ion-button>
     <ion-button color="primary" expand="block" [routerLink]="['/graficos']" [disabled]="checkeds < limit">Mostrar gráfico</ion-button>      
   </ion-toolbar>
     <ion-button (click)="toggleInfiniteScroll()" expand="block" color="dark">
@@ -16,9 +16,9 @@
     </ion-button>
     <ion-searchbar color="medium" showCancelButton="focus" animated></ion-searchbar>
     <ion-list>
-      <ion-item *ngFor="let item of servicio.empresas">
+      <ion-item *ngFor="let item of servicio.empresas" [ngClass]="{'destaca': item.destacada}">
         <ion-item-sliding>
-          <ion-item>
+          <ion-item [ngClass]="{'destaca': item.destacada}">
             <ion-checkbox color="dark" [(ngModel)]="item.isChecked" (click)="comprobar(item)" [disabled]="!item.isChecked && checkeds === limit"></ion-checkbox>
             <ion-label class="labelEmpresa">
               {{item.nombre}}
@@ -26,7 +26,7 @@
             <ion-thumbnail><img class="imagen" src="../../assets/imagenes/adidas.png"></ion-thumbnail>
           </ion-item>
           <ion-item-options>
-            <ion-item-option color="primary" [routerLink]="['/edicion', item.id]">
+            <ion-item-option color="primary" routerDirection="back" [routerLink]="['/edicion', item.id]">
               <ion-icon slot="end" name="pencil"></ion-icon>
               Editar
             </ion-item-option>
@@ -37,13 +37,19 @@
           </ion-item-options>
         </ion-item-sliding>
       </ion-item>
+
     </ion-list>
+
     <ion-infinite-scroll threshold="100px" (ionInfinite)="loadData($event)" [disabled]="cargas <= 0">
       <ion-infinite-scroll-content
         loadingSpinner="bubbles"
         loadingText="Cargando datos…">
       </ion-infinite-scroll-content>
     </ion-infinite-scroll>
+
+
+
   <div id="container">
+
   </div>
 </ion-content>

@@ -32,4 +32,16 @@ ion-thumbnail {
 
 .labelEmpresa {
   padding: 20px;
+  font-size: 22px;
+}
+
+.destaca {
+  --background: rgb(43, 170, 60) !important;
+}
+
+ion-checkbox {
+  margin-left: 7px;
+  margin-right: 7px;
+  margin-top: 10px;
+  --size: 30px;
 }

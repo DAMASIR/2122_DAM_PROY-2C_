@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild, OnInit } from '@angular/core';
 import { IonInfiniteScroll } from '@ionic/angular';
 import { AlertController } from '@ionic/angular';
 import { ServicioEmpresaService } from '../services/servicio-empresa.service';
@@ -11,19 +11,20 @@ import { Empresa } from '../models/empresa';
   styleUrls: ['home.page.scss'],
 })
 export class HomePage {
-  @ViewChild(IonInfiniteScroll) infiniteScroll: IonInfiniteScroll;
+  @ViewChild(IonInfiniteScroll, { static: false }) infiniteScroll: IonInfiniteScroll;
 
   toggle = "Detener scroll infinito";
   cargas = 3;
 
   url: string;
   pagina = 1;
-  empresas_por_pagina = 7;
+  empresas_por_pagina = 8;
 
   public checkeds = 0;
   public limit = 3;
 
   constructor(public servicio: ServicioEmpresaService , public httpServicio: HttpServicioService, public alertController: AlertController) {
+    this.inicializarLista();
     this.getEmpresas(false, "");
   }
 
@@ -57,9 +58,7 @@ export class HomePage {
 
   // Metodo para recargar empresas en el scroll infinito
   getEmpresas(otraCarga, event) {
-
     this.url = '?_page=' + this.pagina + '&_limit=' + this.empresas_por_pagina;
-
     this.httpServicio.getEmpresasList(this.url)
       .subscribe((data: any) => {
         for (let i = 0; i < data.length; i++) {
@@ -68,11 +67,17 @@ export class HomePage {
         console.log(this.servicio.empresas);
         if (otraCarga)
           event.target.complete();
-
-        this.pagina++;
+          this.pagina++;
       }, error => {
         console.log(error);
-      })
+      });
+  }
+  
+  // Metodo para inicializar la lista y resetear el scroll infinito
+  public inicializarLista() {
+    this.servicio.empresas = [];
+    this.cargas = 3;
+    this.pagina = 1;
   }
 
   // Metodo para manejar la eliminacion de una empresa a través de una ventana de alerta para evitar eliminaciones indeseadas
@@ -97,9 +102,7 @@ export class HomePage {
             this.httpServicio.deleteEmpresa(id).subscribe((data) => {
               console.log(data);
               // Recargamos la pantalla con datos actualizados desde el servidor
-              this.servicio.empresas = [];              
-              this.cargas = 3;
-              this.pagina = 1;
+              this.inicializarLista();
               this.getEmpresas(false, "");
               console.log(this.servicio.empresas);
             },
@@ -113,5 +116,9 @@ export class HomePage {
       ]
     });
     await alert.present();
+  }
+
+  ngOnInit() {
+    this.inicializarLista();
   }
 }

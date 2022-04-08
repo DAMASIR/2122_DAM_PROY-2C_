@@ -63,6 +63,12 @@ export class HttpServicioService {
     .pipe(retry(2), catchError(this.handleError));
   }
 
+  comprobarNombreEmpresas(params): Observable<Empresa[]> {
+    return this.http
+    .get<Empresa[]>(this.basePath1 + '?nombre_like='+ params)
+    .pipe(retry(2), catchError(this.handleError));
+  }
+
   getEmpresasList(params): Observable<Empresa[]> {
     return this.http
     .get<Empresa[]>(this.basePath1 + params)
