@@ -2,7 +2,7 @@
   <ion-toolbar color="primary">
     <ion-title>{{titulo}}</ion-title>
     <ion-buttons slot="end">
-      <ion-button [routerLink]="['/']">Salir</ion-button>
+      <ion-button (click)="resetear()" [routerLink]="['/']">Salir</ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
@@ -58,8 +58,8 @@
           </ion-col>
         </ion-row>    
       </ion-grid>
-      <ion-button *ngIf="id > -1" (click)="probar()" color="dark" expand="block" [routerLink]="['/cotizaciones', id]">Editar cotizaciones</ion-button>
-      <ion-button (click)="enviar(formulario.value)" type="submit" color="primary" expand="block" routerDirection="back" [routerLink]="['/']" [disabled]="!formulario.valid">{{textoBoton}}</ion-button>
+      <ion-button *ngIf="id > -1" color="dark" expand="block" [routerLink]="['/cotizaciones', id]">Editar cotizaciones</ion-button>
+      <ion-button (click)="enviar(formulario.value)" type="submit" color="primary" expand="block" [disabled]="!formulario.valid">{{textoBoton}}</ion-button>
     </ion-form>
   </div>
 </ion-content>

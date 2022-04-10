@@ -22,19 +22,19 @@ export class HttpServicioService {
     }),
   };
 
-  // Handle API errors
+  // Manejar errores de API
   handleError(error: HttpErrorResponse) {
     if (error.error instanceof ErrorEvent) {
-      // A client-side or network error occurred. Handle it accordingly.
+      // Error del lado del cliente
       console.error('An error occurred:', error.error.message);
     } else {
-        // The backend returned an unsuccessful response code.
-        // The response body may contain clues as to what went wrong,
+        // El servidor devuelve un mensaje no exitoso.
+        // El cuerpo de la respuesta puede dar pistas del motivo del error.
         console.error(
           `Backend returned code ${error.status}, ` + `body was: ${error.error}`
         );
     }
-    // return an observable with a user-facing error message
+    // Devuelve un observable con un mensaje de error.
     return throwError('Something bad happened; please try again later.');
   }
 
@@ -42,7 +42,7 @@ export class HttpServicioService {
     // Se modifican los nombres de los campos a enviar para que sean compatibles con los del servidor
     let datos = `{"nombre": "${item.nombre}", "logo": "${item.logo}", "sector": "${item.sector}",
     "direccion": "${item.direccion}", "url": "${item.url}", "destacada": ${item.destacada}}`;
-    // console.log(item);
+
     return this.http
     .post<Empresa>(this.basePath1, datos, this.httpOptions)
     .pipe(retry(2), catchError(this.handleError));
@@ -51,7 +51,7 @@ export class HttpServicioService {
   createCotizacion(item): Observable<Cotizacion> {
     // Se modifican los nombres de los campos a enviar para que sean compatibles con los del servidor
     let datos = `{"empresaId": ${item.empresaId}, "fecha": "${item.fecha}", "valor": ${item.valor}}`;
-    // console.log(item);
+
     return this.http
     .post<Cotizacion>(this.basePath2, datos, this.httpOptions)
     .pipe(retry(2), catchError(this.handleError));
@@ -63,9 +63,22 @@ export class HttpServicioService {
     .pipe(retry(2), catchError(this.handleError));
   }
 
+  getCotizacion(id): Observable<Cotizacion> {
+    let id_num = Number(id);
+    return this.http
+    .get<Cotizacion>(this.basePath2 + '/' + id_num)
+    .pipe(retry(2), catchError(this.handleError));
+  }
+
   comprobarNombreEmpresas(params): Observable<Empresa[]> {
     return this.http
-    .get<Empresa[]>(this.basePath1 + '?nombre_like='+ params)
+    .get<Empresa[]>(this.basePath1 + '?nombre='+ params)
+    .pipe(retry(2), catchError(this.handleError));
+  }
+
+  comprobarFechaCotizacion(id, params): Observable<Cotizacion[]> {
+    return this.http
+    .get<Cotizacion[]>(this.basePath1 + '/' + id + '/cotizaciones' + '?fecha='+ params)
     .pipe(retry(2), catchError(this.handleError));
   }
 
@@ -77,6 +90,8 @@ export class HttpServicioService {
 
   getListaCotizacionesEmpresa(id, params): Observable<Cotizacion[]> {
     let id_num = Number(id);
+    console.log(id_num);
+    console.log(id);
     return this.http
     .get<Cotizacion[]>(this.basePath1 + '/' + id_num + '/cotizaciones' + params)
     .pipe(retry(2), catchError(this.handleError));
@@ -118,5 +133,4 @@ export class HttpServicioService {
     .delete<Cotizacion>(this.basePath2 + '/' + id, this.httpOptions)
     .pipe(retry(2), catchError(this.handleError));
   }
-
 }

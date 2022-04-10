@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, FormControl, Validators, FormGroup } from '@angular/forms';
 import { Empresa } from 'src/app/models/empresa';
 import { HttpServicioService } from '../../services/http-servicio.service';
@@ -21,8 +21,9 @@ export class EdicionPage implements OnInit {
 
   public empresa: Empresa;
   public empresaEditada: Empresa;
+  public nombreEmpresa: string;
 
-  constructor(public activatedRouter: ActivatedRoute, public formBuilder: FormBuilder, public servicioHttp: HttpServicioService, public alertController: AlertController) { 
+  constructor(public activatedRouter: ActivatedRoute, public formBuilder: FormBuilder, public servicioHttp: HttpServicioService, public alertController: AlertController, public router: Router) { 
     this.formulario = formBuilder.group({
       nombre: ["", Validators.compose([Validators.minLength(1), Validators.min(0), Validators.max(100), Validators.required])],
       direccion: ["", Validators.compose([Validators.minLength(1), Validators.min(0), Validators.max(100), Validators.required])],
@@ -36,16 +37,22 @@ export class EdicionPage implements OnInit {
   // Metodo ejecutado por el boton del formulario, bien para crear o bien para edtitar una empresa
   public enviar(value) {
     console.log(value);
+    console.log(this.nombreEmpresa);
+    console.log(value.nombre);
     // Se comprueba si la pagina es para creacion o para edicion de empresa
     // Si es para creacion, se comprueba que no exista una empresa con el mismo nombre antes de crearla
-    if(this.id == -1) {
+    if(this.nombreEmpresa !== value.nombre) {
       this.servicioHttp.comprobarNombreEmpresas(value.nombre).subscribe((data: any) => {
         console.log(data);
         if(data.length > 0) {
           this.mensajeAlerta();
-        } else {
+          console.log("Ya existe esa empresa");
+        } else if(this.id == -1){
           this.empresa = new Empresa(value.nombre, value.logo, value.sector, value.direccion, value.web, value.destacada);
           this.crearEmpresa();
+        } else {
+          this.empresaEditada = new Empresa(value.nombre, value.logo, value.sector, value.direccion, value.web, value.destacada);
+          this.modificarEmpresa(this.id, this.empresaEditada);
         }
       }, error => {
         console.log(error);
@@ -60,6 +67,8 @@ export class EdicionPage implements OnInit {
   public crearEmpresa() {
     this.servicioHttp.createEmpresa(this.empresa).subscribe((data: any) => {
       console.log(data);
+      this.limpiar();
+      this.router.navigateByUrl('/');
     }, error => {
       console.log(error);
     });
@@ -68,7 +77,9 @@ export class EdicionPage implements OnInit {
   // Metodo ejecutado para editar una empresa
   public modificarEmpresa(id: number, empresa: Empresa) {
     this.servicioHttp.updateEmpresa(id, empresa).subscribe((data: any) => {
+      console.log('Cuanto tarda...');
       console.log(data);
+      this.router.navigateByUrl('/');
     }, error => {
       console.log(error);
     });
@@ -79,11 +90,14 @@ export class EdicionPage implements OnInit {
     this.formulario.setValue({nombre: "", direccion: "", web: "", sector: "", logo: "", destacada: true});
   }
 
-
   // Metodo para recuperar los valores iniciales del formulario
   public resetear() {
     console.log("hola que hay");
-    this.formulario.setValue({nombre: this.empresaEditada.nombre, direccion: this.empresaEditada.direccion, web: this.empresaEditada.url, sector: this.empresaEditada.sector, logo: this.empresaEditada.logo, destacada: this.empresaEditada.destacada});
+    if(typeof this.empresaEditada === 'undefined') {
+      this.formulario.setValue({nombre: "", direccion: "", web: "", sector: "", logo: "", destacada: true});      
+    } else {
+      this.formulario.setValue({nombre: this.empresaEditada.nombre, direccion: this.empresaEditada.direccion, web: this.empresaEditada.url, sector: this.empresaEditada.sector, logo: this.empresaEditada.logo, destacada: this.empresaEditada.destacada});
+    }    
   }
 
   // Metodo para presentar un mensaje de alerta informando de que no ha sido posible crear la empresa debido a coincidencia del nombre con una existente
@@ -110,6 +124,7 @@ export class EdicionPage implements OnInit {
   ngOnInit() {
     this.id = +this.activatedRouter.snapshot.paramMap.get('id');
     console.log(this.id);
+    this.nombreEmpresa = "";
     if(this.id == -1) {
       this.titulo = "Crear empresa";
       this.textoBoton = "Crear empresa";
@@ -119,6 +134,7 @@ export class EdicionPage implements OnInit {
       this.servicioHttp.getEmpresa(this.id).subscribe((data: Empresa) =>{
         console.log(data);
         this.empresaEditada = Empresa.clone(data);
+        this.nombreEmpresa = this.empresaEditada.nombre;
         console.log(this.empresaEditada);
         this.formulario.setValue({nombre: this.empresaEditada.nombre, direccion: this.empresaEditada.direccion, web: this.empresaEditada.url, sector: this.empresaEditada.sector, logo: this.empresaEditada.logo, destacada: this.empresaEditada.destacada});
     }, error => {
@@ -126,5 +142,4 @@ export class EdicionPage implements OnInit {
       });
     }
   }
-
 }

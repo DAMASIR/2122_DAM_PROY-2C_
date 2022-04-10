@@ -1,0 +1,31 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>{{titulo}}</ion-title>
+    <ion-buttons slot="end">
+      <ion-button class="boton" (click)="resetear()" [routerLink]="['/cotizaciones', idEmpresa]">Volver</ion-button>
+    </ion-buttons>
+    <ion-buttons slot="end">
+      <ion-button class="boton" [routerLink]="['/']">Salir</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-form [formGroup]="formulario" (ngSubmit)="enviar(formulario.value)">
+    <ion-grid>
+      <ion-row>
+        <ion-label>Fecha: </ion-label>
+      </ion-row>
+      <ion-row>
+        <ion-input formControlName="fecha" name="fecha" placeholder="Fecha" type="text" size="30" clear-input></ion-input>
+      </ion-row>
+      <ion-row>
+        <ion-label>Valor: </ion-label>
+      </ion-row>
+      <ion-row>
+        <ion-input formControlName="valor" name="valor" placeholder="Valor" type="text" clear-input></ion-input>
+      </ion-row>
+    </ion-grid>
+    <ion-button (click)="enviar(formulario.value)" type="submit" color="primary" expand="block" [disabled]="!formulario.valid">{{textoBoton}}</ion-button>
+  </ion-form>
+</ion-content>

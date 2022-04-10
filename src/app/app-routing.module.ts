@@ -23,6 +23,11 @@ const routes: Routes = [
     path: 'graficos',
     loadChildren: () => import('./pages/graficos/graficos.module').then( m => m.GraficosPageModule)
   },
+  {
+    path: 'valor/:id/:id2',
+    loadChildren: () => import('./pages/valor/valor.module').then( m => m.ValorPageModule)
+  },
+
 ];
 
 @NgModule({

@@ -1,10 +1,10 @@
 export class Cotizacion {
-    constructor(public id: number, public empresaId: number, public fecha: string, public valor: number) {
+    constructor(public empresaId: number, public fecha: string, public valor: number, public id: number = -1) {
 
     }
 
     public static clone(item: Cotizacion): Cotizacion {
-        return new Cotizacion(item.id, item.empresaId, item.fecha, item.valor);
+        return new Cotizacion(item.empresaId, item.fecha, item.valor, item.id);
     }
 
     public static fromJson(datos): Cotizacion {
