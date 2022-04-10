@@ -14,7 +14,7 @@
     <ion-button (click)="toggleInfiniteScroll()" expand="block" color="dark">
       {{toggle}}
     </ion-button>
-    <ion-searchbar color="medium" showCancelButton="focus" animated></ion-searchbar>
+    <ion-searchbar (ionChange)="searching($event)" color="medium" showCancelButton="focus" animated></ion-searchbar>
     <ion-list>
       <ion-item *ngFor="let item of servicio.empresas" [ngClass]="{'destaca': item.destacada}">
         <ion-item-sliding>

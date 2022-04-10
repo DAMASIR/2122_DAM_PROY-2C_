@@ -23,6 +23,10 @@ export class HomePage {
   public checkeds = 0;
   public limit = 3;
 
+  public params = '?';
+  public params2 = '';
+  public nombreBusqueda = '';
+
   constructor(public servicio: ServicioEmpresaService , public httpServicio: HttpServicioService, public alertController: AlertController) {
     this.inicializarLista();
     this.getEmpresas(false, "");
@@ -58,7 +62,7 @@ export class HomePage {
 
   // Metodo para recargar empresas en el scroll infinito
   getEmpresas(otraCarga, event) {
-    this.url = '?_page=' + this.pagina + '&_limit=' + this.empresas_por_pagina;
+    this.url = this.params + this.nombreBusqueda + this.params2 + '_page=' + this.pagina + '&_limit=' + this.empresas_por_pagina;
     this.httpServicio.getEmpresasList(this.url)
       .subscribe((data: any) => {
         for (let i = 0; i < data.length; i++) {
@@ -79,6 +83,23 @@ export class HomePage {
     this.cargas = 3;
     this.pagina = 1;
   }
+
+    // Metodo utilizado por el buscador para encotrar resultados en el servidor
+    public searching(event) {
+      console.log('Buscando...');
+      console.log(event.detail.value);
+      this.inicializarLista();
+      this.nombreBusqueda = event.detail.value;
+      if(event.detail.value === '') {
+        this.params = '?';
+        this.params2 = '';
+      } else {
+        this.params = '?nombre_like=';
+        this.params2 = '&';
+      }
+      this.url = this.params + this.nombreBusqueda + this.params2 + '_page=' + this.pagina + '&_limit=' + this.empresas_por_pagina;
+      this.getEmpresas(false, "");
+    }
 
   // Metodo para manejar la eliminacion de una empresa a través de una ventana de alerta para evitar eliminaciones indeseadas
   async presentAlertConfirm(id) {
