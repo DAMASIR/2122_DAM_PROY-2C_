@@ -9,7 +9,7 @@
 <ion-content [fullscreen]="true">
   <ion-toolbar>
     <ion-button color="success" expand="block" routerDirection="back" [routerLink]="['/edicion', -1]">Crear empresa</ion-button>
-    <ion-button color="primary" expand="block" [routerLink]="['/graficos']" [disabled]="checkeds < limit">Mostrar gráfico</ion-button>      
+    <ion-button color="primary" expand="block" [routerLink]="['/graficos']" [disabled]="checkeds < limit" (click)="graficoServicio.generaGrafico()">Mostrar gráfico</ion-button>      
   </ion-toolbar>
     <ion-button (click)="toggleInfiniteScroll()" expand="block" color="dark">
       {{toggle}}

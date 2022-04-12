@@ -8,5 +8,11 @@
 </ion-header>
 
 <ion-content>
-
+  <div style="display: block;">
+    <canvas baseChart width="300" height="450" [data]="servicio.lineChartData"
+    [options]="servicio.lineChartOptions"
+    [type]="servicio.lineChartType"
+    (chartHover)="servicio.chartHovered($event)"
+    (chartClick)="servicio.chartClicked($event)">></canvas>
+  </div>
 </ion-content>

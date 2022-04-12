@@ -3,7 +3,10 @@ import { IonInfiniteScroll } from '@ionic/angular';
 import { AlertController } from '@ionic/angular';
 import { ServicioEmpresaService } from '../services/servicio-empresa.service';
 import { HttpServicioService } from '../services/http-servicio.service';
-import { Empresa } from '../models/empresa';
+import { ServicioGraficoService } from '../services/servicio-grafico.service';
+import { DataGrafico } from '../models/data-grafico';
+import { Cotizacion } from '../models/cotizacion';
+
 
 @Component({
   selector: 'app-home',
@@ -27,7 +30,13 @@ export class HomePage {
   public params2 = '';
   public nombreBusqueda = '';
 
-  constructor(public servicio: ServicioEmpresaService , public httpServicio: HttpServicioService, public alertController: AlertController) {
+  public nombreSeleccionada: string;
+  public fechasSeleccionada: string[];
+  public valoresSeleccionada: number[];
+  public grafico: DataGrafico;
+
+
+  constructor(public servicio: ServicioEmpresaService , public httpServicio: HttpServicioService, public alertController: AlertController, public graficoServicio: ServicioGraficoService) {
     this.inicializarLista();
     this.getEmpresas(false, "");
   }
@@ -54,9 +63,16 @@ export class HomePage {
     if (!seleccionado.isChecked){
       this.checkeds++;
       console.log(this.checkeds);
+      this.nombreSeleccionada = seleccionado.nombre;
+      this.obtenerCotizaciones(seleccionado.id, seleccionado.nombre);
     } else {
       this.checkeds--;
       console.log(this.checkeds);
+      for(let i = 0; i < this.graficoServicio.DataGraficos.length; i++) {
+        if(this.graficoServicio.DataGraficos[i].id == seleccionado.id) {
+          this.graficoServicio.DataGraficos.splice(i, 1);
+        }
+      }
     }
   }
 
@@ -101,6 +117,24 @@ export class HomePage {
       this.getEmpresas(false, "");
     }
 
+  // Metodo para obtener las cotizaciones de la empresa seleccionada para graficos
+  public obtenerCotizaciones(id, nombre) {
+    this.httpServicio.getListaCotizacionesEmpresa(id, '').subscribe((data: Cotizacion[]) => {
+      for (let i = 0; i < data.length; i++) {
+        this.fechasSeleccionada.push(data[i].fecha);
+        this.valoresSeleccionada.push(data[i].valor);
+      }
+      console.log(this.fechasSeleccionada);
+      console.log(this.valoresSeleccionada);
+      this.grafico = new DataGrafico(nombre, this.valoresSeleccionada, this.fechasSeleccionada, id);
+      this.graficoServicio.DataGraficos.push(this.grafico);
+      console.log(this.graficoServicio.DataGraficos);
+      this.fechasSeleccionada = [];
+      this.valoresSeleccionada = [];
+    });
+  }
+
+
   // Metodo para manejar la eliminacion de una empresa a través de una ventana de alerta para evitar eliminaciones indeseadas
   async presentAlertConfirm(id) {
     const alert = await this.alertController.create({
@@ -141,5 +175,7 @@ export class HomePage {
 
   ngOnInit() {
     this.inicializarLista();
+    this.fechasSeleccionada = [];
+    this.valoresSeleccionada = [];
   }
 }
