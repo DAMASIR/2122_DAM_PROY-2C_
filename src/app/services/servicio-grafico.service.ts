@@ -1,7 +1,5 @@
 import { Injectable } from '@angular/core';
 import { ChartConfiguration, ChartEvent, ChartType } from 'chart.js';
-import { BaseChartDirective } from 'ng2-charts';
-import { bindCallback } from 'rxjs';
 import { DataGrafico } from '../models/data-grafico';
 
 @Injectable({
@@ -42,7 +40,6 @@ export class ServicioGraficoService {
       {
         data: [ 180, 480, 770, 90, 1000, 270, 400 ],
         label: 'Series C',
-        yAxisID: 'y-axis-1',
         backgroundColor: 'rgba(255,0,0,0.3)',
         borderColor: 'red',
         pointBackgroundColor: 'rgba(148,159,177,1)',
@@ -71,11 +68,6 @@ export class ServicioGraficoService {
       x: {
         ticks: {
           color: 'black'
-        }
-      },
-      'y-axis-1': {
-        ticks: {
-          color: 'red',
         }
       }
     }
