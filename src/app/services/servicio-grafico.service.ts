@@ -77,10 +77,16 @@ export class ServicioGraficoService {
   public lineChartType: ChartType = 'line';
 
   public generaGrafico() {
+    let rango = this.DataGraficos[0].data.length;
+    let indice = 0;
     for(let i = 0; i < this.lineChartData.datasets.length; i++) {
       this.lineChartData.datasets[i].data = this.DataGraficos[i].data;
       this.lineChartData.datasets[i].label = this.DataGraficos[i].label;
+      if(rango > this.DataGraficos[i].data.length) {
+        rango = this.DataGraficos[i].data.length;
+        indice = i;
+      }
     }
-    this.lineChartData.labels = this.DataGraficos[1].fechas;
+    this.lineChartData.labels = this.DataGraficos[indice].fechas;
   }
 }

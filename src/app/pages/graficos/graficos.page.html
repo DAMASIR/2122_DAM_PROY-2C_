@@ -8,14 +8,14 @@
 </ion-header>
 
 <ion-content>
+  <div>
+    <ion-button color="success" expand="block" (click)="cambiar()">{{tituloCambiar}}</ion-button>
+  </div>
   <div class="grafico">
     <canvas baseChart #baseChart="base-chart" width="300" height="450" [data]="servicio.lineChartData"
     [options]="servicio.lineChartOptions"
     [type]="servicio.lineChartType"
     (chartHover)="servicio.chartHovered($event)"
     (chartClick)="servicio.chartClicked($event)">></canvas>
-  </div>
-  <div>
-    <ion-button color="success" expand="block" (click)="cambiar()">{{tituloCambiar}}</ion-button>
   </div>
 </ion-content>

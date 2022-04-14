@@ -15,7 +15,7 @@ export class GraficosPage implements OnInit {
   @ViewChild("baseChart") public chart: BaseChartDirective;
 
   public cambio = false;
-  public tituloCambiar = 'Radar';
+  public tituloCambiar;
 
   public cambiar() {
     if(!this.cambio) {
@@ -38,6 +38,8 @@ export class GraficosPage implements OnInit {
   }
 
   ngOnInit() {
+    this.servicio.lineChartType = 'line';
+    this.tituloCambiar = 'Radar';
   }
 
 }
