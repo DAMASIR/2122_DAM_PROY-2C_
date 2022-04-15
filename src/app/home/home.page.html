@@ -38,7 +38,7 @@
         </ion-item-sliding>
       </ion-item>
     </ion-list>
-    <ion-infinite-scroll threshold="100px" (ionInfinite)="loadData($event)" [disabled]="cargas <= 0">
+    <ion-infinite-scroll threshold="100px" (ionInfinite)="loadData($event)" [disabled]="ultima">
       <ion-infinite-scroll-content
         loadingSpinner="bubbles"
         loadingText="Cargando datos…">

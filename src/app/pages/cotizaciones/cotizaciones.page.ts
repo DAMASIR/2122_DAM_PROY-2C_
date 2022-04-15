@@ -19,12 +19,13 @@ export class CotizacionesPage implements OnInit {
 
   items = [];
   toggle = "Detener scroll infinito";
-  cargas = 3;
   contador = 0;
 
   url: string;
   pagina = 1;
   cotizaciones_por_pagina = 10;
+
+  public ultima = false;
 
   constructor(public servicioHttp: HttpServicioService, public servicio: ServicioEmpresaService, public activatedRouter: ActivatedRoute, public alertController: AlertController) {
     this.inicializarLista();
@@ -35,7 +36,6 @@ export class CotizacionesPage implements OnInit {
     setTimeout(() => {
       console.log('Done');
       this.getCotizaciones(true, event);
-      this.cargas--;
     }, 1000);
   }
 
@@ -59,6 +59,9 @@ export class CotizacionesPage implements OnInit {
             Cotizacion.convertir(data[i]);
             this.servicio.cotizacionesEmpresa.push(data[i]);
           }
+          if(data.length < 10) {
+            this.ultima = true;
+          }
           console.log(this.servicio.cotizacionesEmpresa);
           if (otraCarga === true) {
             event.target.complete();
@@ -72,8 +75,8 @@ export class CotizacionesPage implements OnInit {
   // Metodo para resetear los datos del scroll infinito
   public inicializarLista() {
     this.servicio.cotizacionesEmpresa = [];
-    this.cargas = 3;
     this.pagina = 1;
+    this.ultima = false;
   }
 
   // Metodo para resetar el contenido de las cotizaciones

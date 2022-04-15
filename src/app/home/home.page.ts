@@ -17,8 +17,7 @@ export class HomePage {
   @ViewChild(IonInfiniteScroll, { static: false }) infiniteScroll: IonInfiniteScroll;
 
   toggle = "Detener scroll infinito";
-  cargas = 3;
-
+ 
   url: string;
   pagina = 1;
   empresas_por_pagina = 8;
@@ -35,6 +34,7 @@ export class HomePage {
   public valoresSeleccionada: number[];
   public grafico: DataGrafico;
 
+  public ultima = false;
 
   constructor(public servicio: ServicioEmpresaService , public httpServicio: HttpServicioService, public alertController: AlertController, public graficoServicio: ServicioGraficoService) {
     this.inicializarLista();
@@ -46,7 +46,6 @@ export class HomePage {
     setTimeout(() => {
       console.log('Done');
       this.getEmpresas(true, event);
-      this.cargas--;
     }, 1000);
   }
 
@@ -84,6 +83,9 @@ export class HomePage {
         for (let i = 0; i < data.length; i++) {
           this.servicio.empresas.push(data[i]);
         }
+        if(data.length < 10) {
+          this.ultima = true;
+        }
         console.log(this.servicio.empresas);
         if (otraCarga)
           event.target.complete();
@@ -96,8 +98,8 @@ export class HomePage {
   // Metodo para inicializar la lista y resetear el scroll infinito
   public inicializarLista() {
     this.servicio.empresas = [];
-    this.cargas = 3;
     this.pagina = 1;
+    this.ultima = false;
   }
 
     // Metodo utilizado por el buscador para encotrar resultados en el servidor
