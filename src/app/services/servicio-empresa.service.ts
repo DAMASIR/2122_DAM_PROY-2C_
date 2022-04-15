@@ -13,8 +13,11 @@ export class ServicioEmpresaService {
   public empresas: Empresa[];
   public cotizacionesEmpresa: Cotizacion[];
 
+  public nombreEmpresaEditada: string;
+
   constructor(public alertController: AlertController, private servicioHttp: HttpServicioService) { 
     this.empresas = [];
     this.cotizacionesEmpresa = [];
+    this.nombreEmpresaEditada = 'Empresa';
   }
 }

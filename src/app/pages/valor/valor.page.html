@@ -1,5 +1,5 @@
 <ion-header>
-  <ion-toolbar>
+  <ion-toolbar color="dark">
     <ion-title>{{titulo}}</ion-title>
     <ion-buttons slot="end">
       <ion-button class="boton" (click)="resetear()" [routerLink]="['/cotizaciones', idEmpresa]">Volver</ion-button>
@@ -11,6 +11,9 @@
 </ion-header>
 
 <ion-content>
+  <div class="empresa2">
+    <ion-item class="empresa2">{{servicio.nombreEmpresaEditada}}</ion-item>
+  </div>
   <ion-form [formGroup]="formulario" (ngSubmit)="enviar(formulario.value)">
     <ion-grid>
       <ion-row>

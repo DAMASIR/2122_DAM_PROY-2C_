@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, FormControl, Validators, FormGroup } from '@angular/forms';
 import { Empresa } from 'src/app/models/empresa';
 import { HttpServicioService } from '../../services/http-servicio.service';
+import { ServicioEmpresaService } from 'src/app/services/servicio-empresa.service';
 import { AlertController } from '@ionic/angular';
 
 
@@ -23,7 +24,8 @@ export class EdicionPage implements OnInit {
   public empresaEditada: Empresa;
   public nombreEmpresa: string;
 
-  constructor(public activatedRouter: ActivatedRoute, public formBuilder: FormBuilder, public servicioHttp: HttpServicioService, public alertController: AlertController, public router: Router) { 
+  constructor(public activatedRouter: ActivatedRoute, public formBuilder: FormBuilder, public servicioHttp: HttpServicioService, public servicio: ServicioEmpresaService,
+     public alertController: AlertController, public router: Router) { 
     this.formulario = formBuilder.group({
       nombre: ["", Validators.compose([Validators.minLength(1), Validators.min(0), Validators.max(100), Validators.required])],
       direccion: ["", Validators.compose([Validators.minLength(1), Validators.min(0), Validators.max(100), Validators.required])],
@@ -66,7 +68,7 @@ export class EdicionPage implements OnInit {
   // Metodo ejecutado por el boton del formulario, bien para crear o bien para edtitar una empresa
   public enviar(value) {
     console.log(value);
-    console.log(this.nombreEmpresa);
+    // console.log(this.nombreEmpresa);
     console.log(value.nombre);
     // Se comprueba si la pagina es para creacion o para edicion de empresa
     // Si es para creacion, se comprueba que no exista una empresa con el mismo nombre antes de crearla
@@ -151,6 +153,7 @@ export class EdicionPage implements OnInit {
         console.log(data);
         this.empresaEditada = Empresa.clone(data);
         this.nombreEmpresa = this.empresaEditada.nombre;
+        this.servicio.nombreEmpresaEditada = data.nombre;
         console.log(this.empresaEditada);
         this.formulario.setValue({nombre: this.empresaEditada.nombre, direccion: this.empresaEditada.direccion, web: this.empresaEditada.url, sector: this.empresaEditada.sector, logo: this.empresaEditada.logo, destacada: this.empresaEditada.destacada});
     }, error => {

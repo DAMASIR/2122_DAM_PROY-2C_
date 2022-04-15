@@ -15,6 +15,9 @@
     {{toggle}}
   </ion-button>
   <ion-button color="primary" expand="block" routerDirection="back" [routerLink]="['/valor', id, -1]">Crear cotización</ion-button>
+  <div class="empresa">
+    <ion-item class="empresa">{{servicio.nombreEmpresaEditada}}</ion-item>
+  </div>
   <ion-list>
     <ion-item *ngFor="let item of servicio.cotizacionesEmpresa">
       <ion-item-sliding>

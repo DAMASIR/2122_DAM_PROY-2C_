@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, FormControl, Validators, FormGroup } from '@angular/forms';
 import { HttpServicioService } from '../../services/http-servicio.service';
+import { ServicioEmpresaService } from 'src/app/services/servicio-empresa.service';
 import { Cotizacion } from 'src/app/models/cotizacion';
 import { AlertController } from '@ionic/angular';
 
@@ -23,7 +24,7 @@ export class ValorPage implements OnInit {
   public cotizacionEditada: Cotizacion;
   public fechaCotizacion: string;
 
-  constructor(public activatedRouter: ActivatedRoute, public formBuilder: FormBuilder, public servicioHttp: HttpServicioService, public alertController: AlertController, public router: Router) {
+  constructor(public activatedRouter: ActivatedRoute, public formBuilder: FormBuilder, public servicioHttp: HttpServicioService, public servicio: ServicioEmpresaService, public alertController: AlertController, public router: Router) {
     this.formulario = formBuilder.group({
       fecha: ["", Validators.compose([Validators.minLength(1), Validators.min(0), Validators.max(100), Validators.pattern('^[0-3][0-9][-][0-1][0-9][-][1-2][0-9]{3}$'), Validators.required])],
       valor: [, Validators.compose([Validators.minLength(1), Validators.min(0), Validators.max(10000000), Validators.pattern('\\d*\\.?\\d{1,2}'), Validators.required])]

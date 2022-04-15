@@ -100,6 +100,7 @@ export class HomePage {
     this.servicio.empresas = [];
     this.pagina = 1;
     this.ultima = false;
+    this.graficoServicio.DataGraficos = [];
   }
 
     // Metodo utilizado por el buscador para encotrar resultados en el servidor
