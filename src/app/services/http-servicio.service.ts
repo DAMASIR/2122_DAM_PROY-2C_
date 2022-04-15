@@ -14,6 +14,9 @@ export class HttpServicioService {
   public basePath1 = 'http://localhost:3000/empresas';
   public basePath2 = 'http://localhost:3000/cotizaciones';
 
+  public basePath3 = 'http://192.168.3.103/api/empresas';
+  public basePath4 = 'http://192.168.3.103/api/cotizacions';
+
   constructor(private http: HttpClient) { }
 
   httpOptions = {
@@ -44,29 +47,29 @@ export class HttpServicioService {
     "direccion": "${item.direccion}", "url": "${item.url}", "destacada": ${item.destacada}}`;
 
     return this.http
-    .post<Empresa>(this.basePath1, datos, this.httpOptions)
+    .post<Empresa>(this.basePath3, datos, this.httpOptions)
     .pipe(retry(2), catchError(this.handleError));
   }
 
   createCotizacion(item): Observable<Cotizacion> {
     // Se modifican los nombres de los campos a enviar para que sean compatibles con los del servidor
-    let datos = `{"empresaId": ${item.empresaId}, "fecha": "${item.fecha}", "valor": ${item.valor}}`;
+    let datos = `{"empresa": "/api/empresas/${item.empresaId}", "fecha": "${item.fecha}", "valor": ${item.valor}}`;
 
     return this.http
-    .post<Cotizacion>(this.basePath2, datos, this.httpOptions)
+    .post<Cotizacion>(this.basePath4, datos, this.httpOptions)
     .pipe(retry(2), catchError(this.handleError));
   }
 
   getEmpresa(id): Observable<Empresa> {
     return this.http
-    .get<Empresa>(this.basePath1 + '/' + id)
+    .get<Empresa>(this.basePath3 + '/' + id)
     .pipe(retry(2), catchError(this.handleError));
   }
 
   getCotizacion(id): Observable<Cotizacion> {
     let id_num = Number(id);
     return this.http
-    .get<Cotizacion>(this.basePath2 + '/' + id_num)
+    .get<Cotizacion>(this.basePath4 + '/' + id_num)
     .pipe(retry(2), catchError(this.handleError));
   }
 
@@ -84,7 +87,7 @@ export class HttpServicioService {
 
   getEmpresasList(params): Observable<Empresa[]> {
     return this.http
-    .get<Empresa[]>(this.basePath1 + params)
+    .get<Empresa[]>(this.basePath3 + params)
     .pipe(retry(2), catchError(this.handleError));
   }
 
@@ -93,7 +96,7 @@ export class HttpServicioService {
     console.log(id_num);
     console.log(id);
     return this.http
-    .get<Cotizacion[]>(this.basePath1 + '/' + id_num + '/cotizaciones' + params)
+    .get<Cotizacion[]>(this.basePath3 + '/' + id_num + '/cotizaciones' + params)
     .pipe(retry(2), catchError(this.handleError));
   }
 
@@ -103,7 +106,7 @@ export class HttpServicioService {
 
     return this.http
     .put<Empresa>(
-    this.basePath1 + '/' + id,
+    this.basePath3 + '/' + id,
     datos,
     this.httpOptions
     )
@@ -111,11 +114,11 @@ export class HttpServicioService {
   }
 
   updateCotizacion(id, item: Cotizacion): Observable<Cotizacion> {
-    let data = `{"empresaId": ${item.empresaId}, "fecha": "${item.fecha}", "valor": ${item.valor}}`;
+    let data = `{"empresa": "/api/empresas/${item.empresaId}", "fecha": "${item.fecha}", "valor": ${item.valor}}`;
 
     return this.http
     .put<Cotizacion>(
-    this.basePath2 + '/' + id,
+    this.basePath4 + '/' + id,
     data,
     this.httpOptions
     )
@@ -124,13 +127,13 @@ export class HttpServicioService {
 
   deleteEmpresa(id) {
     return this.http
-    .delete<Empresa>(this.basePath1 + '/' + id, this.httpOptions)
+    .delete<Empresa>(this.basePath3 + '/' + id, this.httpOptions)
     .pipe(retry(2), catchError(this.handleError));
   }
 
   deleteCotizacion(id) {
     return this.http
-    .delete<Cotizacion>(this.basePath2 + '/' + id, this.httpOptions)
+    .delete<Cotizacion>(this.basePath4 + '/' + id, this.httpOptions)
     .pipe(retry(2), catchError(this.handleError));
   }
 }

@@ -31,28 +31,43 @@ export class ValorPage implements OnInit {
   }
 
   // Metodo ejecutado por el boton del formulario, bien para crear o bien para editar una cotizacion
+  // public enviar(value) {
+  //   console.log(value);
+  //   console.log(this.fechaCotizacion);
+  //   console.log(value.fecha);
+  //   // Se comprueba si la pagina es para creacion o para edicion de empresa
+  //   if(this.fechaCotizacion !== value.fecha) {
+  //     this.servicioHttp.comprobarFechaCotizacion(this.idEmpresa, value.fecha).subscribe((data: any) => {
+  //       console.log(data);
+  //       // Se comprueba que no se produzcan duplicados de fechas de cotizacion para una empresa
+  //       if(data.length > 0) {
+  //         this.mensajeAlerta();
+  //         console.log("Ya existe esa fecha");
+  //       } else if(this.idCotizacion == -1){
+  //         this.cotizacion = new Cotizacion(this.idEmpresa, value.fecha, value.valor);
+  //         this.crearCotizacion();
+  //       } else {
+  //         this.cotizacionEditada = new Cotizacion(this.idEmpresa, value.fecha, value.valor);
+  //         this.modificarCotizacion(this.idCotizacion, this.cotizacionEditada);
+  //       }
+  //     }, error => {
+  //       console.log(error);
+  //     });
+  //   } else {
+  //     this.cotizacionEditada = new Cotizacion(this.idEmpresa, value.fecha, value.valor);
+  //     this.modificarCotizacion(this.idCotizacion, this.cotizacionEditada);
+  //   }
+  // }
+
+  // Metodo ejecutado por el boton del formulario, bien para crear o bien para editar una cotizacion
   public enviar(value) {
     console.log(value);
     console.log(this.fechaCotizacion);
     console.log(value.fecha);
     // Se comprueba si la pagina es para creacion o para edicion de empresa
-    if(this.fechaCotizacion !== value.fecha) {
-      this.servicioHttp.comprobarFechaCotizacion(this.idEmpresa, value.fecha).subscribe((data: any) => {
-        console.log(data);
-        // Se comprueba que no se produzcan duplicados de fechas de cotizacion para una empresa
-        if(data.length > 0) {
-          this.mensajeAlerta();
-          console.log("Ya existe esa fecha");
-        } else if(this.idCotizacion == -1){
-          this.cotizacion = new Cotizacion(this.idEmpresa, value.fecha, value.valor);
-          this.crearCotizacion();
-        } else {
-          this.cotizacionEditada = new Cotizacion(this.idEmpresa, value.fecha, value.valor);
-          this.modificarCotizacion(this.idCotizacion, this.cotizacionEditada);
-        }
-      }, error => {
-        console.log(error);
-      });
+    if(this.idCotizacion == -1) {
+        this.cotizacion = new Cotizacion(this.idEmpresa, value.fecha, value.valor);
+        this.crearCotizacion();
     } else {
       this.cotizacionEditada = new Cotizacion(this.idEmpresa, value.fecha, value.valor);
       this.modificarCotizacion(this.idCotizacion, this.cotizacionEditada);
@@ -128,6 +143,7 @@ export class ValorPage implements OnInit {
       this.textoBoton = "Modificar cotizacion";
       this.servicioHttp.getCotizacion(this.idCotizacion).subscribe((data: Cotizacion) =>{
         console.log(data);
+        Cotizacion.convertir(data);
         this.cotizacionEditada = Cotizacion.clone(data);
         this.fechaCotizacion = this.cotizacionEditada.fecha;
         console.log(this.cotizacionEditada);

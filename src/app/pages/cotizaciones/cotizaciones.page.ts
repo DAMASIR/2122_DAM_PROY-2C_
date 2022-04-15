@@ -28,8 +28,7 @@ export class CotizacionesPage implements OnInit {
 
   constructor(public servicioHttp: HttpServicioService, public servicio: ServicioEmpresaService, public activatedRouter: ActivatedRoute, public alertController: AlertController) {
     this.inicializarLista();
-    this.getCotizaciones(false, "");
-   }
+  }
 
   // Metodo que lanza la recarga de datos al scroll infinito
   loadData(event) {
@@ -50,21 +49,24 @@ export class CotizacionesPage implements OnInit {
 
   // Metodo para recargar empresas en el scroll infinito
   getCotizaciones(otraCarga, event) {
-      this.url = '?_page=' + this.pagina + '&_limit=' + this.cotizaciones_por_pagina;
+      this.url = '?page=' + this.pagina + '&limit=' + this.cotizaciones_por_pagina;
+      console.log(this.url);
   
       this.servicioHttp.getListaCotizacionesEmpresa(this.id, this.url)
         .subscribe((data: any) => {
           console.log(data);
           for (let i = 0; i < data.length; i++) {
+            Cotizacion.convertir(data[i]);
             this.servicio.cotizacionesEmpresa.push(data[i]);
           }
           console.log(this.servicio.cotizacionesEmpresa);
-          if (otraCarga)
+          if (otraCarga === true) {
             event.target.complete();
-            this.pagina++;
+          }
+          this.pagina++;
         }, error => {
           console.log(error);
-        })
+        });
     }
 
   // Metodo para resetear los datos del scroll infinito

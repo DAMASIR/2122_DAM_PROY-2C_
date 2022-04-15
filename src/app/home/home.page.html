@@ -23,7 +23,7 @@
             <ion-label class="labelEmpresa">
               {{item.nombre}}
             </ion-label>
-            <ion-thumbnail><img class="imagen" src="../../assets/imagenes/adidas.png"></ion-thumbnail>
+            <ion-thumbnail><img class="imagen" src={{item.logo}}></ion-thumbnail>
           </ion-item>
           <ion-item-options>
             <ion-item-option color="primary" routerDirection="back" [routerLink]="['/edicion', item.id]">

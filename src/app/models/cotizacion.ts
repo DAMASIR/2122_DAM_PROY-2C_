@@ -15,4 +15,13 @@ export class Cotizacion {
         }
         return new Cotizacion(datos.id, datos.empresaId, datos.fecha, datos.valor);
     }
+
+    public static convertir (datos: Cotizacion)  {
+        let unaFecha = datos.fecha.slice(0, 10);
+        let year = unaFecha.slice(0, 4);
+        let month = unaFecha.slice(4, 7);
+        let day = unaFecha.slice(8);
+        let nuevaFecha = day +  month + '-' + year;
+        datos.fecha = nuevaFecha;
+    }
 }

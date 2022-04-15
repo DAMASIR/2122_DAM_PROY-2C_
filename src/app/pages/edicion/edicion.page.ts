@@ -35,28 +35,44 @@ export class EdicionPage implements OnInit {
   }
 
   // Metodo ejecutado por el boton del formulario, bien para crear o bien para edtitar una empresa
+  // public enviar(value) {
+  //   console.log(value);
+  //   console.log(this.nombreEmpresa);
+  //   console.log(value.nombre);
+  //   // Se comprueba si la pagina es para creacion o para edicion de empresa
+  //   // Si es para creacion, se comprueba que no exista una empresa con el mismo nombre antes de crearla
+  //   if(this.nombreEmpresa !== value.nombre) {
+  //     this.servicioHttp.comprobarNombreEmpresas(value.nombre).subscribe((data: any) => {
+  //       console.log(data);
+  //       if(data.length > 0) {
+  //         this.mensajeAlerta();
+  //         console.log("Ya existe esa empresa");
+  //       } else if(this.id == -1){
+  //         this.empresa = new Empresa(value.nombre, value.logo, value.sector, value.direccion, value.web, value.destacada);
+  //         this.crearEmpresa();
+  //       } else {
+  //         this.empresaEditada = new Empresa(value.nombre, value.logo, value.sector, value.direccion, value.web, value.destacada);
+  //         this.modificarEmpresa(this.id, this.empresaEditada);
+  //       }
+  //     }, error => {
+  //       console.log(error);
+  //     });
+  //   } else {
+  //     this.empresaEditada = new Empresa(value.nombre, value.logo, value.sector, value.direccion, value.web, value.destacada);
+  //     this.modificarEmpresa(this.id, this.empresaEditada);
+  //   }
+  // }
+
+  // Metodo ejecutado por el boton del formulario, bien para crear o bien para edtitar una empresa
   public enviar(value) {
     console.log(value);
     console.log(this.nombreEmpresa);
     console.log(value.nombre);
     // Se comprueba si la pagina es para creacion o para edicion de empresa
     // Si es para creacion, se comprueba que no exista una empresa con el mismo nombre antes de crearla
-    if(this.nombreEmpresa !== value.nombre) {
-      this.servicioHttp.comprobarNombreEmpresas(value.nombre).subscribe((data: any) => {
-        console.log(data);
-        if(data.length > 0) {
-          this.mensajeAlerta();
-          console.log("Ya existe esa empresa");
-        } else if(this.id == -1){
-          this.empresa = new Empresa(value.nombre, value.logo, value.sector, value.direccion, value.web, value.destacada);
-          this.crearEmpresa();
-        } else {
-          this.empresaEditada = new Empresa(value.nombre, value.logo, value.sector, value.direccion, value.web, value.destacada);
-          this.modificarEmpresa(this.id, this.empresaEditada);
-        }
-      }, error => {
-        console.log(error);
-      });
+    if(this.id == -1) {
+        this.empresa = new Empresa(value.nombre, value.logo, value.sector, value.direccion, value.web, value.destacada);
+        this.crearEmpresa();
     } else {
       this.empresaEditada = new Empresa(value.nombre, value.logo, value.sector, value.direccion, value.web, value.destacada);
       this.modificarEmpresa(this.id, this.empresaEditada);

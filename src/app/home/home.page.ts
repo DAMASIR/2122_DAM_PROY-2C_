@@ -78,7 +78,7 @@ export class HomePage {
 
   // Metodo para recargar empresas en el scroll infinito
   getEmpresas(otraCarga, event) {
-    this.url = this.params + this.nombreBusqueda + this.params2 + '_page=' + this.pagina + '&_limit=' + this.empresas_por_pagina;
+    this.url = this.params + this.nombreBusqueda + this.params2 + 'page=' + this.pagina + '&_limit=' + this.empresas_por_pagina;
     this.httpServicio.getEmpresasList(this.url)
       .subscribe((data: any) => {
         for (let i = 0; i < data.length; i++) {
@@ -121,9 +121,12 @@ export class HomePage {
   public obtenerCotizaciones(id, nombre) {
     this.httpServicio.getListaCotizacionesEmpresa(id, '').subscribe((data: Cotizacion[]) => {
       for (let i = 0; i < data.length; i++) {
+        Cotizacion.convertir(data[i]);
         this.fechasSeleccionada.push(data[i].fecha);
         this.valoresSeleccionada.push(data[i].valor);
       }
+      this.fechasSeleccionada.reverse();
+      this.valoresSeleccionada.reverse();
       console.log(this.fechasSeleccionada);
       console.log(this.valoresSeleccionada);
       this.grafico = new DataGrafico(nombre, this.valoresSeleccionada, this.fechasSeleccionada, id);
