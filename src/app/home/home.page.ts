@@ -1,4 +1,5 @@
 import { Component, ViewChild, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { IonInfiniteScroll } from '@ionic/angular';
 import { AlertController } from '@ionic/angular';
 import { ServicioEmpresaService } from '../services/servicio-empresa.service';
@@ -6,7 +7,6 @@ import { HttpServicioService } from '../services/http-servicio.service';
 import { ServicioGraficoService } from '../services/servicio-grafico.service';
 import { DataGrafico } from '../models/data-grafico';
 import { Cotizacion } from '../models/cotizacion';
-
 
 @Component({
   selector: 'app-home',
@@ -17,7 +17,7 @@ export class HomePage {
   @ViewChild(IonInfiniteScroll, { static: false }) infiniteScroll: IonInfiniteScroll;
 
   toggle = "Detener scroll infinito";
- 
+
   url: string;
   pagina = 1;
   empresas_por_pagina = 8;
@@ -36,7 +36,8 @@ export class HomePage {
 
   public ultima = false;
 
-  constructor(public servicio: ServicioEmpresaService , public httpServicio: HttpServicioService, public alertController: AlertController, public graficoServicio: ServicioGraficoService) {
+  constructor(public servicio: ServicioEmpresaService , public httpServicio: HttpServicioService, public alertController: AlertController, 
+    public graficoServicio: ServicioGraficoService, public router: Router) {
     this.inicializarLista();
     this.getEmpresas(false, "");
   }
@@ -58,25 +59,33 @@ export class HomePage {
   }
 
   // Metodo utilizado al seleccionar las empresas que se utilizaran en los graficos
-  comprobar(seleccionado) {
+  public comprobar(seleccionado) {
     if (!seleccionado.isChecked){
       this.checkeds++;
       console.log(this.checkeds);
       this.nombreSeleccionada = seleccionado.nombre;
+      this.graficoServicio.pagina = 2;
+      this.graficoServicio.paginarDatos = true;
       this.obtenerCotizaciones(seleccionado.id, seleccionado.nombre);
     } else {
+      let index = 4;
       this.checkeds--;
       console.log(this.checkeds);
+      this.graficoServicio.pagina = 2;
+      this.graficoServicio.paginarDatos = true;
       for(let i = 0; i < this.graficoServicio.DataGraficos.length; i++) {
+        this.graficoServicio.DataGraficos[i].data.splice(0, this.graficoServicio.DataGraficos[i].data.length - 10);
+        this.graficoServicio.DataGraficos[i].fechas.splice(0, this.graficoServicio.DataGraficos[i].fechas.length - 10);
         if(this.graficoServicio.DataGraficos[i].id == seleccionado.id) {
-          this.graficoServicio.DataGraficos.splice(i, 1);
+          index = i;
         }
       }
+      this.graficoServicio.DataGraficos.splice(index, 1);
     }
   }
 
   // Metodo para recargar empresas en el scroll infinito
-  getEmpresas(otraCarga, event) {
+  public getEmpresas(otraCarga, event) {
     this.url = this.params + this.nombreBusqueda + this.params2 + 'page=' + this.pagina + '&_limit=' + this.empresas_por_pagina;
     this.httpServicio.getEmpresasList(this.url)
       .subscribe((data: any) => {
@@ -103,22 +112,22 @@ export class HomePage {
     this.graficoServicio.DataGraficos = [];
   }
 
-    // Metodo utilizado por el buscador para encotrar resultados en el servidor
-    public searching(event) {
-      console.log('Buscando...');
-      console.log(event.detail.value);
-      this.inicializarLista();
-      this.nombreBusqueda = event.detail.value;
-      if(event.detail.value === '') {
-        this.params = '?';
-        this.params2 = '';
-      } else {
-        this.params = '?nombre_like=';
-        this.params2 = '&';
-      }
-      this.url = this.params + this.nombreBusqueda + this.params2 + '_page=' + this.pagina + '&_limit=' + this.empresas_por_pagina;
-      this.getEmpresas(false, "");
+  // Metodo utilizado por el buscador para encotrar resultados en el servidor
+  public searching(event) {
+    console.log('Buscando...');
+    console.log(event.detail.value);
+    this.inicializarLista();
+    this.nombreBusqueda = event.detail.value;
+    if(event.detail.value === '') {
+      this.params = '?';
+      this.params2 = '';
+    } else {
+      this.params = '?nombre_like=';
+      this.params2 = '&';
     }
+    this.url = this.params + this.nombreBusqueda + this.params2 + '_page=' + this.pagina + '&_limit=' + this.empresas_por_pagina;
+    this.getEmpresas(false, "");
+  }
 
   // Metodo para obtener las cotizaciones de la empresa seleccionada para graficos
   public obtenerCotizaciones(id, nombre) {
@@ -137,9 +146,38 @@ export class HomePage {
       console.log(this.graficoServicio.DataGraficos);
       this.fechasSeleccionada = [];
       this.valoresSeleccionada = [];
+    }, error => {
+      console.log(error);
     });
   }
 
+  // Metodo para comprobar la compatibilidad de los datos de fechas y valores de las 3 empresas seleccionadas para las gráficas
+  public consolidar() {
+    let permitir = true;
+    let rango = this.graficoServicio.DataGraficos[0].fechas.length;
+    for(let i = 0; i < this.graficoServicio.DataGraficos.length; i++) {
+      if(this.graficoServicio.DataGraficos[i].fechas.length != rango) {
+        permitir = false;
+        this.alertaDatosIncompatibles();
+        break;
+      }
+      for(let j = 0; j < this.graficoServicio.DataGraficos[i].fechas.length; j++) {
+        if(this.graficoServicio.DataGraficos[i].fechas[j] != this.grafico.fechas[j]) {
+          permitir = false;
+          console.log('Imposible generar grafico');
+          break;
+        }
+        if(!permitir) {
+          this.alertaDatosIncompatibles();
+          break;
+        }
+      }
+    }
+    if(permitir) {
+      this.router.navigateByUrl('/graficos');
+      this.graficoServicio.generaGrafico();
+    }
+  }
 
   // Metodo para manejar la eliminacion de una empresa a través de una ventana de alerta para evitar eliminaciones indeseadas
   async presentAlertConfirm(id) {
@@ -172,6 +210,27 @@ export class HomePage {
             });
             console.log('Confirmar Eliminar Empresa');
             console.log(id);
+          }
+        }
+      ]
+    });
+    await alert.present();
+  }
+
+  // Metodo que presenta la ventana de alerta impidiendo la generacion de graficos con datos incompatibles
+  async alertaDatosIncompatibles() {
+    const alert = await this.alertController.create({
+      cssClass: 'my-custom-class',
+      header: 'Seleccion incompatible',
+      message: 'Imposible crear gráfico por datos incompatibles.',
+      buttons: [
+        {
+          text: 'Ok',
+          role: 'cancel',
+          cssClass: 'secondary',
+          id: 'cancel-button',
+          handler: (blah) => {
+            console.log('Operacion cancelada');
           }
         }
       ]

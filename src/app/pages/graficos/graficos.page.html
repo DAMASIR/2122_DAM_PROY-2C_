@@ -9,6 +9,7 @@
 
 <ion-content>
   <div>
+    <ion-button color="warning" expand="block" (click)="recargar(0)" [disabled]="!servicio.paginarDatos">{{tituloDatos}}</ion-button>
     <ion-button color="success" expand="block" (click)="cambiar()">{{tituloCambiar}}</ion-button>
   </div>
   <div class="grafico">

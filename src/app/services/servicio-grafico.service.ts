@@ -1,17 +1,25 @@
 import { Injectable } from '@angular/core';
 import { ChartConfiguration, ChartEvent, ChartType } from 'chart.js';
 import { DataGrafico } from '../models/data-grafico';
+import { HttpServicioService } from './http-servicio.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ServicioGraficoService {
 
-  constructor() {
-    this.DataGraficos = [];
-   }
-
   public DataGraficos: DataGrafico[];
+  
+  public pagina = 2;
+  public paginarDatos = true;
+  public fechasSeleccionada: string[];
+  public valoresSeleccionada: number[];
+
+  constructor(public httpServicio: HttpServicioService) {
+    this.DataGraficos = [];
+    this.fechasSeleccionada = [];
+    this.valoresSeleccionada = [];
+   }
 
   public lineChartData: ChartConfiguration['data'] = {
     datasets: [
@@ -77,16 +85,11 @@ export class ServicioGraficoService {
   public lineChartType: ChartType = 'line';
 
   public generaGrafico() {
-    let rango = this.DataGraficos[0].data.length;
-    let indice = 0;
     for(let i = 0; i < this.lineChartData.datasets.length; i++) {
       this.lineChartData.datasets[i].data = this.DataGraficos[i].data;
       this.lineChartData.datasets[i].label = this.DataGraficos[i].label;
-      if(rango > this.DataGraficos[i].data.length) {
-        rango = this.DataGraficos[i].data.length;
-        indice = i;
-      }
     }
-    this.lineChartData.labels = this.DataGraficos[indice].fechas;
+    this.lineChartData.labels = this.DataGraficos[1].fechas;
   }
+
 }
