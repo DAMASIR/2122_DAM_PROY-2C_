@@ -36,7 +36,7 @@ ion-thumbnail {
 }
 
 .destaca {
-  --background: rgb(43, 170, 60) !important;
+  --background: rgb(255, 81, 0) !important;
 }
 
 ion-checkbox {
@@ -44,4 +44,16 @@ ion-checkbox {
   margin-right: 7px;
   margin-top: 10px;
   --size: 30px;
+  border: solid;
+  border-color: black;
+  border-width: 1px;
+  box-shadow: 3px 3px 3px;
+  border-radius: 5px;
+}
+
+ion-item-option {
+  border-radius: 10px;
+  margin-bottom: 16px;
+  margin-right: 9px;
+  margin-top: 15px;
 }

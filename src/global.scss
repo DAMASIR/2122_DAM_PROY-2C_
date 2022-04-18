@@ -24,3 +24,23 @@
 @import "~@ionic/angular/css/text-alignment.css";
 @import "~@ionic/angular/css/text-transformation.css";
 @import "~@ionic/angular/css/flex-utils.css";
+
+.my-custom-class .alert-wrapper {
+    background: #e6f5fa;
+  }
+  
+.my-custom-class {
+    /* div {
+        font-weight: bold;
+    } */
+    button {
+        font-weight: bold !important;
+    }
+    h2 {
+        color: #ce390c !important;
+        font-weight: bold !important;
+    }
+}
+.eliminar {
+    color: #ce390c !important;
+}

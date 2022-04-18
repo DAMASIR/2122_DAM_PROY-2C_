@@ -26,8 +26,8 @@ export class ServicioGraficoService {
       {
         data: [ 65, 59, 80, 81, 56, 55, 40 ],
         label: 'Series A',
-        backgroundColor: 'rgba(148,159,177,0.3)',
-        borderColor: 'rgba(148,159,177,1)',
+        backgroundColor: 'rgba(48,159,177,0.4)',
+        borderColor: 'rgba(48,159,177,1)',
         pointBackgroundColor: 'rgba(148,159,177,1)',
         pointBorderColor: '#fff',
         pointHoverBackgroundColor: '#fff',
@@ -37,8 +37,8 @@ export class ServicioGraficoService {
       {
         data: [ 28, 48, 40, 19, 86, 27, 90 ],
         label: 'Series B',
-        backgroundColor: 'rgba(77,83,96,0.3)',
-        borderColor: 'rgba(77,83,96,1)',
+        backgroundColor: 'rgba(205, 81, 0, 0.4)',
+        borderColor: 'rgba(90, 80, 0)',
         pointBackgroundColor: 'rgba(77,83,96,1)',
         pointBorderColor: '#fff',
         pointHoverBackgroundColor: '#fff',

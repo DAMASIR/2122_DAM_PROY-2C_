@@ -12,18 +12,18 @@
 
 <ion-content>
   <div class="empresa2">
-    <ion-item class="empresa2">{{servicio.nombreEmpresaEditada}}</ion-item>
+    <ion-item class="empresa3">{{servicio.nombreEmpresaEditada}}</ion-item>
   </div>
   <ion-form [formGroup]="formulario" (ngSubmit)="enviar(formulario.value)">
     <ion-grid>
       <ion-row>
-        <ion-label>Fecha: </ion-label>
+        <ion-label>Fecha: </ion-label><span class="formato"> (dd-mm-yyyy)</span>
       </ion-row>
       <ion-row>
         <ion-input formControlName="fecha" name="fecha" placeholder="Fecha" type="text" size="30" clear-input></ion-input>
       </ion-row>
       <ion-row>
-        <ion-label>Valor: </ion-label>
+        <ion-label>Valor: </ion-label><span class="formato"> (máximo 2 decimales)</span>
       </ion-row>
       <ion-row>
         <ion-input formControlName="valor" name="valor" placeholder="Valor" type="text" clear-input></ion-input>

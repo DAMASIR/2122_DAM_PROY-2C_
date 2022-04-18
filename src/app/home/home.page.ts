@@ -196,6 +196,7 @@ export class HomePage {
           }
         }, {
           text: 'Eliminar',
+          cssClass: 'eliminar',
           id: 'confirm-button',
           handler: () => {
             this.httpServicio.deleteEmpresa(id).subscribe((data) => {

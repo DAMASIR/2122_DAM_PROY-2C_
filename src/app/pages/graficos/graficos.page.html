@@ -1,5 +1,5 @@
 <ion-header>
-  <ion-toolbar color="primary">
+  <ion-toolbar color="dark">
     <ion-title>Grafico de cotizaciones</ion-title>
     <ion-buttons slot="end">
       <ion-button [routerLink]="['/']">Salir</ion-button>
@@ -9,7 +9,7 @@
 
 <ion-content>
   <div>
-    <ion-button color="warning" expand="block" (click)="recargar(0)" [disabled]="!servicio.paginarDatos">{{tituloDatos}}</ion-button>
+    <ion-button color="primary" expand="block" (click)="recargar(0)" [disabled]="!servicio.paginarDatos">{{tituloDatos}}</ion-button>
     <ion-button color="success" expand="block" (click)="cambiar()">{{tituloCambiar}}</ion-button>
   </div>
   <div class="grafico">

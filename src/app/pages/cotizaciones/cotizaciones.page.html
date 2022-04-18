@@ -2,10 +2,10 @@
   <ion-toolbar color="dark">
     <ion-title>Cotizaciones</ion-title>
     <ion-buttons slot="end">
-      <ion-button [routerLink]="['/edicion', id]" (click)="resetearCotizaciones()">Volver</ion-button>
+      <ion-button [routerLink]="['/edicion', id]">Volver</ion-button>
     </ion-buttons>
     <ion-buttons slot="end">
-      <ion-button [routerLink]="['/']" (click)="resetearCotizaciones()">Salir</ion-button>
+      <ion-button [routerLink]="['/']">Salir</ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
@@ -16,7 +16,7 @@
   </ion-button>
   <ion-button color="primary" expand="block" routerDirection="back" [routerLink]="['/valor', id, -1]">Crear cotización</ion-button>
   <div class="empresa">
-    <ion-item class="empresa">{{servicio.nombreEmpresaEditada}}</ion-item>
+    <ion-item class="empresa3">{{servicio.nombreEmpresaEditada}}</ion-item>
   </div>
   <ion-list>
     <ion-item *ngFor="let item of servicio.cotizacionesEmpresa">

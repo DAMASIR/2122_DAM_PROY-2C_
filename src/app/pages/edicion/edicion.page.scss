@@ -1,10 +1,15 @@
 ion-input {
     --background: rgb(255, 115, 0);
     --padding-start: 10px;
-    margin-bottom: 25px;
+    margin-bottom: 22px;
     margin-left: 5px;
     margin-right: 5px;
     font-size: 20px;
+    border: solid;
+    border-color: black;
+    border-width: 1px;
+    box-shadow: 3px 3px 3px;
+    border-radius: 5px;
 }
 ion-row {
     margin: 8px;
@@ -19,7 +24,6 @@ ion-checkbox {
  }
 .label {
     padding-left: 10px;
-    // vertical-align: middle;
 }
 .contenedor {
     height: 78%;
@@ -30,4 +34,12 @@ ion-checkbox {
 .boton{
     margin-top: 15px;
     margin-bottom: -5px;
+}
+.checker {
+    margin-bottom: -15px;
+    border: solid;
+    border-color: black;
+    border-width: 1px;
+    box-shadow: 3px 3px 3px;
+    border-radius: 5px;
 }

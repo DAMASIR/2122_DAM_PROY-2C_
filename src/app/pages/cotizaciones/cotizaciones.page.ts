@@ -79,11 +79,6 @@ export class CotizacionesPage implements OnInit {
     this.ultima = false;
   }
 
-  // Metodo para resetar el contenido de las cotizaciones
-  resetearCotizaciones() {
-    this.servicio.cotizacionesEmpresa = [];
-  }
-
   // Presentacion de la ventana de alerta para confirmar la eliminacion de una cotizacion
   async presentAlertConfirm(id) {
     const alert = await this.alertController.create({
@@ -101,6 +96,7 @@ export class CotizacionesPage implements OnInit {
           }
         }, {
           text: 'Eliminar',
+          cssClass: 'eliminar',
           id: 'confirm-button',
           handler: () => {
             this.servicioHttp.deleteCotizacion(id).subscribe((data) => {
