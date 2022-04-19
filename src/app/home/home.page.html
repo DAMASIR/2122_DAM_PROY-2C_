@@ -9,7 +9,7 @@
 <ion-content [fullscreen]="true">
   <ion-toolbar>
     <ion-button color="success" expand="block" routerDirection="back" [routerLink]="['/edicion', -1]">Crear empresa</ion-button>
-    <ion-button color="primary" expand="block" [disabled]="checkeds < limit" (click)="consolidar()">Mostrar gráfico</ion-button>      
+    <ion-button color="primary" expand="block" [disabled]="graficoServicio.checkeds < limit" (click)="consolidar()">Mostrar gráfico</ion-button>      
   </ion-toolbar>
     <ion-button (click)="toggleInfiniteScroll()" expand="block" color="dark">
       {{toggle}}
@@ -19,7 +19,7 @@
       <ion-item *ngFor="let item of servicio.empresas" [ngClass]="{'destaca': item.destacada}">
         <ion-item-sliding>
           <ion-item [ngClass]="{'destaca': item.destacada}">
-            <ion-checkbox color="dark" [(ngModel)]="item.isChecked" (click)="comprobar(item)" [disabled]="!item.isChecked && checkeds === limit"></ion-checkbox>
+            <ion-checkbox color="dark" [(ngModel)]="item.isChecked" (click)="comprobar(item)" [disabled]="!item.isChecked && graficoServicio.checkeds === limit"></ion-checkbox>
             <ion-label class="labelEmpresa">
               {{item.nombre}}
             </ion-label>

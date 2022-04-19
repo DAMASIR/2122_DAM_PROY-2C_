@@ -22,7 +22,7 @@ export class HomePage {
   pagina = 1;
   empresas_por_pagina = 8;
 
-  public checkeds = 0;
+  // public checkeds = 0;
   public limit = 3;
 
   public params = '?';
@@ -32,7 +32,7 @@ export class HomePage {
   public nombreSeleccionada: string;
   public fechasSeleccionada: string[];
   public valoresSeleccionada: number[];
-  public grafico: DataGrafico;
+  // public grafico: DataGrafico;
 
   public ultima = false;
 
@@ -60,16 +60,16 @@ export class HomePage {
   // Metodo utilizado al seleccionar las empresas que se utilizaran en los graficos
   public comprobar(seleccionado) {
     if (!seleccionado.isChecked){
-      this.checkeds++;
-      console.log(this.checkeds);
+      this.graficoServicio.checkeds++;
+      console.log(this.graficoServicio.checkeds);
       this.nombreSeleccionada = seleccionado.nombre;
       this.graficoServicio.pagina = 2;
       this.graficoServicio.paginarDatos = true;
       this.obtenerCotizaciones(seleccionado.id, seleccionado.nombre);
     } else {
       let index = 4;
-      this.checkeds--;
-      console.log(this.checkeds);
+      this.graficoServicio.checkeds--;
+      console.log(this.graficoServicio.checkeds);
       this.graficoServicio.pagina = 2;
       this.graficoServicio.paginarDatos = true;
       for(let i = 0; i < this.graficoServicio.DataGraficos.length; i++) {
@@ -90,6 +90,11 @@ export class HomePage {
       .subscribe((data: any) => {
         for (let i = 0; i < data.length; i++) {
           this.servicio.empresas.push(data[i]);
+          for(let j = 0; j < this.graficoServicio.DataGraficos.length; j++) {
+            if(data[i].id == this.graficoServicio.DataGraficos[j].id) {
+              data[i].isChecked = true;
+            }
+          }
         }
         if(data.length < 10) {
           this.ultima = true;
@@ -108,8 +113,8 @@ export class HomePage {
     this.servicio.empresas = [];
     this.pagina = 1;
     this.ultima = false;
-    this.graficoServicio.DataGraficos = [];
-    this.checkeds = 0;
+    // this.graficoServicio.DataGraficos = [];
+    // this.checkeds = 0;
   }
 
   // Metodo utilizado por el buscador para encotrar resultados en el servidor
@@ -141,8 +146,8 @@ export class HomePage {
       this.valoresSeleccionada.reverse();
       console.log(this.fechasSeleccionada);
       console.log(this.valoresSeleccionada);
-      this.grafico = new DataGrafico(nombre, this.valoresSeleccionada, this.fechasSeleccionada, id);
-      this.graficoServicio.DataGraficos.push(this.grafico);
+      this.graficoServicio.grafico = new DataGrafico(nombre, this.valoresSeleccionada, this.fechasSeleccionada, id);
+      this.graficoServicio.DataGraficos.push(this.graficoServicio.grafico);
       console.log(this.graficoServicio.DataGraficos);
       this.fechasSeleccionada = [];
       this.valoresSeleccionada = [];
@@ -162,7 +167,7 @@ export class HomePage {
         break;
       }
       for(let j = 0; j < this.graficoServicio.DataGraficos[i].fechas.length; j++) {
-        if(this.graficoServicio.DataGraficos[i].fechas[j] != this.grafico.fechas[j]) {
+        if(this.graficoServicio.DataGraficos[i].fechas[j] != this.graficoServicio.grafico.fechas[j]) {
           permitir = false;
           break;
         }

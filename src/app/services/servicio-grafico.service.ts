@@ -9,6 +9,8 @@ import { HttpServicioService } from './http-servicio.service';
 export class ServicioGraficoService {
 
   public DataGraficos: DataGrafico[];
+  public checkeds = 0;
+  public grafico: DataGrafico;
   
   public pagina = 2;
   public paginarDatos = true;
