@@ -45,7 +45,6 @@ export class HomePage {
   // Metodo llamado por el scroll infinito cuando se activa
   loadData(event) {
     setTimeout(() => {
-      console.log('Done');
       this.getEmpresas(true, event);
     }, 1000);
   }
@@ -104,12 +103,13 @@ export class HomePage {
       });
   }
   
-  // Metodo para inicializar la lista y resetear el scroll infinito
+  // Metodo para inicializar la lista, las empresas seleccionadas para el grafico y resetear el scroll infinito
   public inicializarLista() {
     this.servicio.empresas = [];
     this.pagina = 1;
     this.ultima = false;
     this.graficoServicio.DataGraficos = [];
+    this.checkeds = 0;
   }
 
   // Metodo utilizado por el buscador para encotrar resultados en el servidor
@@ -164,7 +164,6 @@ export class HomePage {
       for(let j = 0; j < this.graficoServicio.DataGraficos[i].fechas.length; j++) {
         if(this.graficoServicio.DataGraficos[i].fechas[j] != this.grafico.fechas[j]) {
           permitir = false;
-          console.log('Imposible generar grafico');
           break;
         }
         if(!permitir) {
@@ -204,7 +203,6 @@ export class HomePage {
               // Recargamos la pantalla con datos actualizados desde el servidor
               this.inicializarLista();
               this.getEmpresas(false, "");
-              console.log(this.servicio.empresas);
             },
             (error) => {
               console.log(error);

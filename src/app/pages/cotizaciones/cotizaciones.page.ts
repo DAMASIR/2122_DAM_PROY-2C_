@@ -34,7 +34,6 @@ export class CotizacionesPage implements OnInit {
   // Metodo que lanza la recarga de datos al scroll infinito
   loadData(event) {
     setTimeout(() => {
-      console.log('Done');
       this.getCotizaciones(true, event);
     }, 1000);
   }
@@ -50,11 +49,9 @@ export class CotizacionesPage implements OnInit {
   // Metodo para recargar empresas en el scroll infinito
   getCotizaciones(otraCarga, event) {
       this.url = '?page=' + this.pagina + '&limit=' + this.cotizaciones_por_pagina;
-      console.log(this.url);
   
       this.servicioHttp.getListaCotizacionesEmpresa(this.id, this.url)
         .subscribe((data: any) => {
-          console.log(data);
           for (let i = 0; i < data.length; i++) {
             Cotizacion.convertir(data[i]);
             this.servicio.cotizacionesEmpresa.push(data[i]);
@@ -62,7 +59,6 @@ export class CotizacionesPage implements OnInit {
           if(data.length < 10) {
             this.ultima = true;
           }
-          console.log(this.servicio.cotizacionesEmpresa);
           if (otraCarga === true) {
             event.target.complete();
           }
@@ -100,17 +96,13 @@ export class CotizacionesPage implements OnInit {
           id: 'confirm-button',
           handler: () => {
             this.servicioHttp.deleteCotizacion(id).subscribe((data) => {
-              console.log(data);
               // Recargamos la pantalla con datos actualizados desde el servidor
               this.inicializarLista();
               this.getCotizaciones(false, "");
-              console.log(this.servicio.cotizacionesEmpresa);
             },
             (error) => {
               console.log(error);
             });
-            console.log('Confirmar Eliminar Empresa');
-            console.log(id);
           }
         }
       ]

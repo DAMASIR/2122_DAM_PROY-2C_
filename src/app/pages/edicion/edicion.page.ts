@@ -67,9 +67,6 @@ export class EdicionPage implements OnInit {
 
   // Metodo ejecutado por el boton del formulario, bien para crear o bien para edtitar una empresa
   public enviar(value) {
-    console.log(value);
-    // console.log(this.nombreEmpresa);
-    console.log(value.nombre);
     // Se comprueba si la pagina es para creacion o para edicion de empresa
     // Si es para creacion, se comprueba que no exista una empresa con el mismo nombre antes de crearla
     if(this.id == -1) {
@@ -84,7 +81,6 @@ export class EdicionPage implements OnInit {
   // Metodo ejecutado para crear una empresa nueva
   public crearEmpresa() {
     this.servicioHttp.createEmpresa(this.empresa).subscribe((data: any) => {
-      console.log(data);
       this.limpiar();
       this.router.navigateByUrl('/');
     }, error => {
@@ -95,8 +91,6 @@ export class EdicionPage implements OnInit {
   // Metodo ejecutado para editar una empresa
   public modificarEmpresa(id: number, empresa: Empresa) {
     this.servicioHttp.updateEmpresa(id, empresa).subscribe((data: any) => {
-      console.log('Cuanto tarda...');
-      console.log(data);
       this.router.navigateByUrl('/');
     }, error => {
       console.log(error);
@@ -110,7 +104,6 @@ export class EdicionPage implements OnInit {
 
   // Metodo para recuperar los valores iniciales del formulario
   public resetear() {
-    console.log("hola que hay");
     if(typeof this.empresaEditada === 'undefined') {
       this.formulario.setValue({nombre: "", direccion: "", web: "", sector: "", logo: "", destacada: true});      
     } else {
@@ -141,7 +134,6 @@ export class EdicionPage implements OnInit {
 
   ngOnInit() {
     this.id = +this.activatedRouter.snapshot.paramMap.get('id');
-    console.log(this.id);
     this.nombreEmpresa = "";
     if(this.id == -1) {
       this.titulo = "Crear empresa";
@@ -150,11 +142,9 @@ export class EdicionPage implements OnInit {
       this.titulo = "Editar empresa";
       this.textoBoton = "Modificar datos";
       this.servicioHttp.getEmpresa(this.id).subscribe((data: Empresa) =>{
-        console.log(data);
         this.empresaEditada = Empresa.clone(data);
         this.nombreEmpresa = this.empresaEditada.nombre;
         this.servicio.nombreEmpresaEditada = data.nombre;
-        console.log(this.empresaEditada);
         this.formulario.setValue({nombre: this.empresaEditada.nombre, direccion: this.empresaEditada.direccion, web: this.empresaEditada.url, sector: this.empresaEditada.sector, logo: this.empresaEditada.logo, destacada: this.empresaEditada.destacada});
     }, error => {
       console.log(error);

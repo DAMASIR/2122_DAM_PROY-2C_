@@ -21,6 +21,7 @@ export class GraficosPage implements OnInit {
   public tituloDatos;
   public fechasRecarga = [];
 
+  // Metodo ejecutado para cambiar el tipo de grafico
   public cambiar() {
     if(!this.cambio) {
       this.servicio.lineChartType = 'radar';
@@ -33,11 +34,12 @@ export class GraficosPage implements OnInit {
     }
   }
 
+  // Metodo ejecutado para recargar datos de cotizaciones paginados
   public recargar(indice: number) {
     let permitir = true;
     let params = '?page=' + this.servicio.pagina;
-    console.log(params);
     this.httpServicio.getListaCotizacionesEmpresa(this.servicio.DataGraficos[indice].id, params).subscribe((data: Cotizacion[]) => {
+      // Si el rango de las cotizaciones recargadas es menor que 10, no habra mas datos que recargar
       if(data.length < 10) {
         this.servicio.paginarDatos = false;
         this.tituloDatos = 'No hay mas datos';
@@ -49,8 +51,6 @@ export class GraficosPage implements OnInit {
       }
       this.servicio.fechasSeleccionada.reverse();
       this.servicio.valoresSeleccionada.reverse();
-      console.log(this.servicio.fechasSeleccionada);
-      console.log(this.servicio.valoresSeleccionada);
 
       this.fechasRecarga.push(this.servicio.fechasSeleccionada);
 
@@ -58,7 +58,6 @@ export class GraficosPage implements OnInit {
       this.servicio.DataGraficos[indice].data = this.servicio.valoresSeleccionada.concat(this.servicio.DataGraficos[indice].data);
       this.servicio.fechasSeleccionada = [];
       this.servicio.valoresSeleccionada = [];
-      console.log(this.servicio.DataGraficos[indice]);
 
       // Se comprueba que los rangos de fechas recargadas son iguales
       // Si no son iguales se lanza una ventana de alerta impidiendo la recarga

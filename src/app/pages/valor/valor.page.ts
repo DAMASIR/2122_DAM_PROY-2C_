@@ -62,9 +62,6 @@ export class ValorPage implements OnInit {
 
   // Metodo ejecutado por el boton del formulario, bien para crear o bien para editar una cotizacion
   public enviar(value) {
-    console.log(value);
-    console.log(this.fechaCotizacion);
-    console.log(value.fecha);
     // Se comprueba si la pagina es para creacion o para edicion de empresa
     if(this.idCotizacion == -1) {
         this.cotizacion = new Cotizacion(this.idEmpresa, value.fecha, value.valor);
@@ -78,7 +75,6 @@ export class ValorPage implements OnInit {
   // Metodo para crear una cotizacion
   public crearCotizacion() {
     this.servicioHttp.createCotizacion(this.cotizacion).subscribe((data: any) => {
-      console.log(data);
       this.limpiar();
       this.router.navigateByUrl('/cotizaciones/' + this.idEmpresa);
     }, error => {
@@ -89,13 +85,13 @@ export class ValorPage implements OnInit {
   // Metodo para modificar una cotizacion
   public modificarCotizacion(id: number, cotizacion: Cotizacion) {
     this.servicioHttp.updateCotizacion(id, cotizacion).subscribe((data: any) => {
-      console.log(data);
       this.router.navigateByUrl('/cotizaciones/' + this.idEmpresa);
     }, error => {
       console.log(error);
     });
   }
 
+  // Metodo para vaciar los valores del formulario de cotizacion
   public limpiar() {
     this.formulario.setValue({fecha: "", valor: null});
   }
@@ -131,9 +127,7 @@ export class ValorPage implements OnInit {
 
   ngOnInit() {
     this.idEmpresa = +this.activatedRouter.snapshot.paramMap.get('id');
-    console.log(this.idEmpresa);
     this.idCotizacion = +this.activatedRouter.snapshot.paramMap.get('id2');
-    console.log(this.idCotizacion);
     this.fechaCotizacion = "fecha";
     
     if(this.idCotizacion == -1) {
@@ -143,11 +137,9 @@ export class ValorPage implements OnInit {
       this.titulo = "Editar cotizacion";
       this.textoBoton = "Modificar cotizacion";
       this.servicioHttp.getCotizacion(this.idCotizacion).subscribe((data: Cotizacion) =>{
-        console.log(data);
         Cotizacion.convertir(data);
         this.cotizacionEditada = Cotizacion.clone(data);
         this.fechaCotizacion = this.cotizacionEditada.fecha;
-        console.log(this.cotizacionEditada);
         this.formulario.setValue({fecha: this.cotizacionEditada.fecha, valor: this.cotizacionEditada.valor});
     }, error => {
       console.log(error);
