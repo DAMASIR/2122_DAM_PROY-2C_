@@ -11,8 +11,8 @@ import { Cotizacion } from '../models/cotizacion';
 })
 export class HttpServicioService {
 
-  public basePath1 = 'http://localhost:3000/empresas';
-  public basePath2 = 'http://localhost:3000/cotizaciones';
+  // public basePath1 = 'http://localhost:3000/empresas';
+  // public basePath2 = 'http://localhost:3000/cotizaciones';
 
   public basePath3 = 'http://192.168.3.103/api/empresas';
   public basePath4 = 'http://192.168.3.103/api/cotizacions';
@@ -77,20 +77,6 @@ export class HttpServicioService {
     .pipe(retry(2), catchError(this.handleError));
   }
 
-  // Metodo para comprobar el nombre de las empresas y evitar duplicidades de nombres
-  comprobarNombreEmpresas(params): Observable<Empresa[]> {
-    return this.http
-    .get<Empresa[]>(this.basePath1 + '?nombre='+ params)
-    .pipe(retry(2), catchError(this.handleError));
-  }
-
-  // Metodo para comprobar las fechas de las cotizaciones y evitar duplicidades de fechas
-  comprobarFechaCotizacion(id, params): Observable<Cotizacion[]> {
-    return this.http
-    .get<Cotizacion[]>(this.basePath1 + '/' + id + '/cotizaciones' + '?fecha='+ params)
-    .pipe(retry(2), catchError(this.handleError));
-  }
-
   // Metodo para obtener el listado de empresas
   getEmpresasList(params): Observable<Empresa[]> {
     return this.http
@@ -98,7 +84,7 @@ export class HttpServicioService {
     .pipe(retry(2), catchError(this.handleError));
   }
 
-  // Metodo para obtener le listado de cotizaciones de una empresa
+  // Metodo para obtener el listado de cotizaciones de una empresa
   getListaCotizacionesEmpresa(id, params): Observable<Cotizacion[]> {
     let id_num = Number(id);
     return this.http

@@ -46,7 +46,7 @@ export class CotizacionesPage implements OnInit {
     } else {this.toggle = "Detener scroll infinito"}
   }
 
-  // Metodo para recargar empresas en el scroll infinito
+  // Metodo para recargar cotizaciones en el scroll infinito
   getCotizaciones(otraCarga, event) {
       this.url = '?page=' + this.pagina + '&limit=' + this.cotizaciones_por_pagina;
   

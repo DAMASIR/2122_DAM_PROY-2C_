@@ -41,24 +41,24 @@
         <ion-row>
           <ion-input formControlName="logo" name="logo" placeholder="URL logo" type="text" clear-input></ion-input>
         </ion-row>
-        <ion-row>
-          <ion-label>Destacada: </ion-label>
+        <ion-row class="combi">
+          <ion-col>
+            <ion-label>Destacada: </ion-label>
+          </ion-col>
+          <ion-col>
+            <ion-button type="button" (click)="limpiar()" class="boton" color="success" expand="block">Limpiar</ion-button>            
+          </ion-col>
         </ion-row>
-        <ion-row>
-          <ion-checkbox class="checker" formControlName="destacada" name="destacada"></ion-checkbox>
-        </ion-row>
-      </ion-grid>
-      <ion-grid>
         <ion-row>
           <ion-col>
-            <ion-button type="button" (click)="limpiar()" class="boton" color="success" expand="block">Limpiar</ion-button>
+            <ion-checkbox class="checker" formControlName="destacada" name="destacada"></ion-checkbox>
           </ion-col>
           <ion-col *ngIf="id > -1">
-            <ion-button type="button" (click)="resetear()" class="boton" color="warning" expand="block">Resetear</ion-button>
+            <ion-button type="button" (click)="resetear()" class="resetea" color="warning" expand="block">Resetear</ion-button>            
           </ion-col>
-        </ion-row>    
+        </ion-row>
       </ion-grid>
-      <ion-button *ngIf="id > -1" color="dark" expand="block" [routerLink]="['/cotizaciones', id]">Editar cotizaciones</ion-button>
+      <ion-button *ngIf="id > -1" color="dark" expand="block" [routerLink]="['/cotizaciones', id]" class="editcot">Editar cotizaciones</ion-button>
       <ion-button (click)="enviar(formulario.value)" type="submit" color="primary" expand="block" [disabled]="!formulario.valid">{{textoBoton}}</ion-button>
     </ion-form>
   </div>

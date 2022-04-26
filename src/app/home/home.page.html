@@ -11,7 +11,7 @@
     <ion-button color="success" expand="block" routerDirection="back" [routerLink]="['/edicion', -1]">Crear empresa</ion-button>
     <ion-button color="primary" expand="block" [disabled]="graficoServicio.checkeds < limit" (click)="consolidar()">Mostrar gráfico</ion-button>      
   </ion-toolbar>
-    <ion-button (click)="toggleInfiniteScroll()" expand="block" color="dark">
+    <ion-button (click)="toggleInfiniteScroll()" expand="block" color="dark" [disabled]="ultima">
       {{toggle}}
     </ion-button>
     <ion-searchbar (ionChange)="searching($event)" color="medium" showCancelButton="focus" animated></ion-searchbar>
@@ -23,7 +23,7 @@
             <ion-label class="labelEmpresa">
               {{item.nombre}}
             </ion-label>
-            <ion-thumbnail><img class="imagen" src={{item.logo}}></ion-thumbnail>
+            <ion-thumbnail><div class="logo"><img class="imagen" src={{item.logo}}></div></ion-thumbnail>
           </ion-item>
           <ion-item-options>
             <ion-item-option color="primary" routerDirection="back" [routerLink]="['/edicion', item.id]">

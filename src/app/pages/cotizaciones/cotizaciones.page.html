@@ -11,7 +11,7 @@
 </ion-header>
 
 <ion-content>
-  <ion-button (click)="toggleInfiniteScroll()" expand="block" color="dark">
+  <ion-button (click)="toggleInfiniteScroll()" expand="block" color="dark" [disabled]="ultima">
     {{toggle}}
   </ion-button>
   <ion-button color="primary" expand="block" routerDirection="back" [routerLink]="['/valor', id, -1]">Crear cotización</ion-button>

@@ -51,13 +51,16 @@ export class HomePage {
 
   // Metodo para activar o desactivar el scroll infinito
   toggleInfiniteScroll() {
-    this.infiniteScroll.disabled = !this.infiniteScroll.disabled;
+    if(!this.ultima) {
+      this.infiniteScroll.disabled = !this.infiniteScroll.disabled;
+    }
+    
     if(this.toggle == "Detener scroll infinito"){
       this.toggle = "Activar scroll infinito";
     } else {this.toggle = "Detener scroll infinito"}
   }
 
-  // Metodo utilizado al seleccionar las empresas que se utilizaran en los graficos
+  // Metodo ejecutado al seleccionar las empresas que se utilizaran en los graficos
   public comprobar(seleccionado) {
     if (!seleccionado.isChecked){
       this.graficoServicio.checkeds++;

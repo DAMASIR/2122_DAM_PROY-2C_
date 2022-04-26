@@ -32,37 +32,8 @@ export class ValorPage implements OnInit {
   }
 
   // Metodo ejecutado por el boton del formulario, bien para crear o bien para editar una cotizacion
-  // public enviar(value) {
-  //   console.log(value);
-  //   console.log(this.fechaCotizacion);
-  //   console.log(value.fecha);
-  //   // Se comprueba si la pagina es para creacion o para edicion de empresa
-  //   if(this.fechaCotizacion !== value.fecha) {
-  //     this.servicioHttp.comprobarFechaCotizacion(this.idEmpresa, value.fecha).subscribe((data: any) => {
-  //       console.log(data);
-  //       // Se comprueba que no se produzcan duplicados de fechas de cotizacion para una empresa
-  //       if(data.length > 0) {
-  //         this.mensajeAlerta();
-  //         console.log("Ya existe esa fecha");
-  //       } else if(this.idCotizacion == -1){
-  //         this.cotizacion = new Cotizacion(this.idEmpresa, value.fecha, value.valor);
-  //         this.crearCotizacion();
-  //       } else {
-  //         this.cotizacionEditada = new Cotizacion(this.idEmpresa, value.fecha, value.valor);
-  //         this.modificarCotizacion(this.idCotizacion, this.cotizacionEditada);
-  //       }
-  //     }, error => {
-  //       console.log(error);
-  //     });
-  //   } else {
-  //     this.cotizacionEditada = new Cotizacion(this.idEmpresa, value.fecha, value.valor);
-  //     this.modificarCotizacion(this.idCotizacion, this.cotizacionEditada);
-  //   }
-  // }
-
-  // Metodo ejecutado por el boton del formulario, bien para crear o bien para editar una cotizacion
   public enviar(value) {
-    // Se comprueba si la pagina es para creacion o para edicion de empresa
+    // Se comprueba si la pagina es para creacion o para edicion de cotizacion
     if(this.idCotizacion == -1) {
         this.cotizacion = new Cotizacion(this.idEmpresa, value.fecha, value.valor);
         this.crearCotizacion();
@@ -79,6 +50,7 @@ export class ValorPage implements OnInit {
       this.router.navigateByUrl('/cotizaciones/' + this.idEmpresa);
     }, error => {
       console.log(error);
+      this.mensajeAlerta();
     });
   }
 
@@ -104,12 +76,12 @@ export class ValorPage implements OnInit {
       this.formulario.setValue({fecha: this.cotizacionEditada.fecha, valor: this.cotizacionEditada.valor});
     }
   }
-  // Metodo para presentar un mensaje de alerta informando de que no ha sido posible crear la empresa debido a coincidencia del nombre con una existente
+  // Metodo para presentar un mensaje de alerta informando de que no ha sido posible crear la cotizacion debido a coincidencia de la fecha con una cotizacion de la misma empresa
   async mensajeAlerta() {
       const alert = await this.alertController.create({
         cssClass: 'my-custom-class',
         header: 'Operación cancelada',
-        message: 'No se puede crear la cotización. Ya existe una con esa fecha.',
+        message: 'No se puede crear la cotización. Es posible que exista una con esa fecha para esta empresa.',
         buttons: [
           {
             text: 'Ok',
