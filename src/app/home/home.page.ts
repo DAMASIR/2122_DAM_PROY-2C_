@@ -22,7 +22,6 @@ export class HomePage {
   pagina = 1;
   empresas_por_pagina = 8;
 
-  // public checkeds = 0;
   public limit = 3;
 
   public params = '?';
@@ -32,7 +31,6 @@ export class HomePage {
   public nombreSeleccionada: string;
   public fechasSeleccionada: string[];
   public valoresSeleccionada: number[];
-  // public grafico: DataGrafico;
 
   public ultima = false;
 
@@ -64,7 +62,6 @@ export class HomePage {
   public comprobar(seleccionado) {
     if (!seleccionado.isChecked){
       this.graficoServicio.checkeds++;
-      console.log(this.graficoServicio.checkeds);
       this.nombreSeleccionada = seleccionado.nombre;
       this.graficoServicio.pagina = 2;
       this.graficoServicio.paginarDatos = true;
@@ -72,7 +69,6 @@ export class HomePage {
     } else {
       let index = 4;
       this.graficoServicio.checkeds--;
-      console.log(this.graficoServicio.checkeds);
       this.graficoServicio.pagina = 2;
       this.graficoServicio.paginarDatos = true;
       for(let i = 0; i < this.graficoServicio.DataGraficos.length; i++) {
@@ -88,7 +84,7 @@ export class HomePage {
 
   // Metodo para recargar empresas en el scroll infinito
   public getEmpresas(otraCarga, event) {
-    this.url = this.params + this.nombreBusqueda + this.params2 + 'page=' + this.pagina + '&_limit=' + this.empresas_por_pagina;
+    this.url =  this.params + 'page=' + this.pagina + this.params2 + 'nombre=' + this.nombreBusqueda;
     this.httpServicio.getEmpresasList(this.url)
       .subscribe((data: any) => {
         for (let i = 0; i < data.length; i++) {
@@ -102,7 +98,6 @@ export class HomePage {
         if(data.length < 10) {
           this.ultima = true;
         }
-        console.log(this.servicio.empresas);
         if (otraCarga)
           event.target.complete();
           this.pagina++;
@@ -116,24 +111,19 @@ export class HomePage {
     this.servicio.empresas = [];
     this.pagina = 1;
     this.ultima = false;
-    // this.graficoServicio.DataGraficos = [];
-    // this.checkeds = 0;
   }
 
   // Metodo utilizado por el buscador para encotrar resultados en el servidor
   public searching(event) {
-    console.log('Buscando...');
-    console.log(event.detail.value);
     this.inicializarLista();
     this.nombreBusqueda = event.detail.value;
     if(event.detail.value === '') {
       this.params = '?';
       this.params2 = '';
     } else {
-      this.params = '?nombre_like=';
+      this.params = '?';
       this.params2 = '&';
     }
-    this.url = this.params + this.nombreBusqueda + this.params2 + '_page=' + this.pagina + '&_limit=' + this.empresas_por_pagina;
     this.getEmpresas(false, "");
   }
 
@@ -147,11 +137,8 @@ export class HomePage {
       }
       this.fechasSeleccionada.reverse();
       this.valoresSeleccionada.reverse();
-      console.log(this.fechasSeleccionada);
-      console.log(this.valoresSeleccionada);
       this.graficoServicio.grafico = new DataGrafico(nombre, this.valoresSeleccionada, this.fechasSeleccionada, id);
       this.graficoServicio.DataGraficos.push(this.graficoServicio.grafico);
-      console.log(this.graficoServicio.DataGraficos);
       this.fechasSeleccionada = [];
       this.valoresSeleccionada = [];
     }, error => {
@@ -207,7 +194,6 @@ export class HomePage {
           id: 'confirm-button',
           handler: () => {
             this.httpServicio.deleteEmpresa(id).subscribe((data) => {
-              console.log(data);
               // Recargamos la pantalla con datos actualizados desde el servidor
               this.inicializarLista();
               this.getEmpresas(false, "");
@@ -215,8 +201,7 @@ export class HomePage {
             (error) => {
               console.log(error);
             });
-            console.log('Confirmar Eliminar Empresa');
-            console.log(id);
+            console.log('Empresa eliminada');
           }
         }
       ]
