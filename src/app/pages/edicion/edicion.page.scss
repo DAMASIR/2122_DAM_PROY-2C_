@@ -1,0 +1,55 @@
+ion-input {
+    --background: rgb(255, 115, 0);
+    --padding-start: 10px;
+    margin-bottom: 13px;
+    margin-left: 5px;
+    margin-right: 5px;
+    font-size: 20px;
+    border: solid;
+    border-color: black;
+    border-width: 1px;
+    box-shadow: 3px 3px 3px;
+    border-radius: 5px;
+}
+ion-row {
+    margin: 8px;
+}
+ion-checkbox {
+    margin-left: 20px;
+    margin-top: -30px;
+    --size: 40px;
+ }
+ ion-label {
+     font-size: 20px;
+ }
+.label {
+    padding-left: 10px;
+}
+.contenedor {
+    height: 78%;
+    display: flex;
+    align-items: top;
+    justify-content: center;
+}
+.boton{
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+.checker {
+    margin-bottom: -5px;
+    border: solid;
+    border-color: black;
+    border-width: 1px;
+    box-shadow: 3px 3px 3px;
+    border-radius: 5px;
+}
+.combi {
+    margin-top: -5px !important;
+    margin-bottom: -10px;
+}
+.editcot {
+    margin-top: -5px;
+}
+.resetea {
+    margin-bottom: 10px;
+}

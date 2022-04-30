@@ -1,0 +1,47 @@
+<ion-header>
+  <ion-toolbar color="dark">
+    <ion-title>Cotizaciones</ion-title>
+    <ion-buttons slot="end">
+      <ion-button [routerLink]="['/edicion', id]">Volver</ion-button>
+    </ion-buttons>
+    <ion-buttons slot="end">
+      <ion-button [routerLink]="['/']">Salir</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-button (click)="toggleInfiniteScroll()" expand="block" color="dark" [disabled]="ultima">
+    {{toggle}}
+  </ion-button>
+  <ion-button color="primary" expand="block" routerDirection="back" [routerLink]="['/valor', id, -1]">Crear cotización</ion-button>
+  <div class="empresa">
+    <ion-item class="empresa3">{{servicio.nombreEmpresaEditada}}</ion-item>
+  </div>
+  <ion-list>
+    <ion-item *ngFor="let item of servicio.cotizacionesEmpresa">
+      <ion-item-sliding>
+        <ion-item>
+          <ion-input class="valores" placeholder="Fecha" value={{item.fecha}} readonly></ion-input>
+          <ion-input class="valores" placeholder="Valor" value={{item.valor}} readonly></ion-input>
+        </ion-item>
+        <ion-item-options>
+          <ion-item-option color="primary" routerDirection="back" [routerLink]="['/valor', id, item.id]">
+            <ion-icon slot="end" name="pencil"></ion-icon>
+            Editar
+          </ion-item-option>
+          <ion-item-option color="danger" (click)="presentAlertConfirm(item.id)">
+            <ion-icon slot="end" name="trash"></ion-icon>
+            Borrar
+          </ion-item-option>
+        </ion-item-options>
+      </ion-item-sliding>
+    </ion-item>
+  </ion-list>
+    <ion-infinite-scroll threshold="100px" (ionInfinite)="loadData($event)" [disabled]="ultima">
+    <ion-infinite-scroll-content
+      loadingSpinner="bubbles"
+      loadingText="Cargando datos…">
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+</ion-content>

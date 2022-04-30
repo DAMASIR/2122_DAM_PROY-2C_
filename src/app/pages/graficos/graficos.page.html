@@ -1,0 +1,22 @@
+<ion-header>
+  <ion-toolbar color="dark">
+    <ion-title>Grafico de cotizaciones</ion-title>
+    <ion-buttons slot="end">
+      <ion-button [routerLink]="['/']">Salir</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div>
+    <ion-button color="primary" expand="block" (click)="recargar(0)" [disabled]="!servicio.paginarDatos">{{tituloDatos}}</ion-button>
+    <ion-button color="success" expand="block" (click)="cambiar()">{{tituloCambiar}}</ion-button>
+  </div>
+  <div class="grafico">
+    <canvas baseChart #baseChart="base-chart" width="300" height="450" [data]="servicio.lineChartData"
+    [options]="servicio.lineChartOptions"
+    [type]="servicio.lineChartType"
+    (chartHover)="servicio.chartHovered($event)"
+    (chartClick)="servicio.chartClicked($event)">></canvas>
+  </div>
+</ion-content>
